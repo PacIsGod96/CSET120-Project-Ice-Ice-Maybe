@@ -74,8 +74,34 @@ header img{
 
     .tab-nav {
         display: block;
+        position: sticky;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        opacity: 0.7;
+        background-color: #F9FBFC;
     }
-
+    .tab-nav a{
+        text-decoration: none;
+        color: black;
+        font-size: 25px;
+        opacity: 1.5;
+    }
+    .tab-nav img{
+        width: 80px;
+        max-width: 100%;
+        margin-right: 30px;
+    }
+    .tab-links{
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-left: 60px;
+        align-items: center;
+    }
+    .tab-nav a:hover{
+        text-decoration: underline;
+        font-weight: bold;
+    }
 }
 
 
