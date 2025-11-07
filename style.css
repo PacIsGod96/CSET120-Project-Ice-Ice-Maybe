@@ -42,11 +42,6 @@
 /* style rules for footer */
 .copy {
     text-align: center;
-=======
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 body{
     background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1 );
