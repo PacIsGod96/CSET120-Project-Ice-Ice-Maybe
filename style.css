@@ -6,10 +6,31 @@
     border: 0;
 }
 
+/* misc classes */
+.center {
+    margin: 0 auto;
+}
+
+.center-txt {
+    text-align: center;
+}
+
+.top-space {
+    padding-top: 30px;
+}
+
+.bottom-space {
+    padding-bottom: 30px;
+}
+
 /* style rules for body */
 body {
-        background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1 );
-    }
+    background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1 );
+}
+
+p {
+    font-family: "Nova Flat", system-ui;
+}
 
 /* style rules for header */
 header{
@@ -23,6 +44,10 @@ header img{
 }
 
 /* style rules for nav */
+nav {
+    font-family: "Quintessential", serif;
+}
+
 .desk-nav, .tab-nav {
     display: none;
 }
@@ -62,24 +87,56 @@ header img{
 
 
 /* style rules for footer */
+
+footer {
+    background-color:#F9FBFC;
+    padding-bottom: 30px;
+}
+
+footer h2 {
+    font-family: "Nova Flat", system-ui;
+}
+
+.footer-logo {
+    display: none;
+}
+
+.footer-list {
+    list-style-type: none;
+    text-align: center;
+}
+
+.footer-list a {
+    display: block;
+    color: #000;
+    margin: 5px 0;
+}
+
 .copy {
     text-align: center;
+    padding-top: 10px;
+    font-size: 1.25em
+}
+
+.tab-footer-title {
+    display: none;
 }
 
 /* tablet */
 @media screen and (min-width: 550px) {
-    .mobile-nav, .desk-nav {
+    /* nav */
+    .mobile-nav, #desk-nav {
         display: none;
     }
 
-    .tab-nav {
+    #tab-nav {
         display: block;
         position: sticky;
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(10px);
-        opacity: 0.7;
         background-color: #F9FBFC;
+        transition-duration: 0.3s;
+        font-family: "Quintessential", serif;
     }
+
     .tab-nav a{
         text-decoration: none;
         color: black;
@@ -102,18 +159,44 @@ header img{
         text-decoration: underline;
         font-weight: bold;
     }
+
+    /* footer */
+    footer {
+        padding: 40px 0;
+    }
+
+    .footer-logo {
+        display: block;
+        width: 150px;
+    }
+
+    .mobile-footer-title {
+        display: none;
+    }
+
+    .tab-footer-title {
+        display: block;
+    }
+
+    .footer-grid {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 0 20%;
+        padding-left: 75px;
+    }
 }
 
 
 /* desktop */
 @media screen and (min-width: 1000px) {
 
-    nav{
+    #desk-nav{
+        display: flex;
         position: sticky;
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(10px);
-        opacity: 0.7;
         background-color: #F9FBFC;
+        transition-duration: 0.3s;
+        font-family: "Quintessential", serif;
     }
 
     nav a{
@@ -149,7 +232,7 @@ header img{
         margin-top: 5px;
     }
 
-    .mobile-nav, .tab-nav {
+    .mobile-nav, #tab-nav {
         display: none;
     }
 
