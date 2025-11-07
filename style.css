@@ -1,3 +1,4 @@
+
 /* css reset */
 * {
     margin: 0;
@@ -41,4 +42,57 @@
 /* style rules for footer */
 .copy {
     text-align: center;
+=======
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1 );
+}
+header{
+    display: flex;
+    justify-content: center;
+}
+header img{
+    width: 200px;
+}
+nav{
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    background: #F9FBFC;
+    position: sticky;
+    backdrop-filter: blur(10px);
+    opacity: 0.7;
+}
+nav a{
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+}
+nav a:hover{
+    text-decoration: underline;
+    font-weight: bold;
+}
+nav img{
+    width: 80px;
+}
+.links{
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    margin-left: 60px;
+}
+.links a{
+    padding: 100px;
+}
+.profile-img{
+    margin-right: 50px;
+    margin-top: 5px;
+}
+.desk-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
