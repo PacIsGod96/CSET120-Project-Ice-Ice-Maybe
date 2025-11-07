@@ -155,7 +155,7 @@ footer h2 {
         margin-left: 60px;
         align-items: center;
     }
-    .tab-nav a:hover{
+    .tab-nav a :hover{
         text-decoration: underline;
         font-weight: bold;
     }
