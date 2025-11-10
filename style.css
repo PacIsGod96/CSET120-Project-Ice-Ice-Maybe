@@ -85,6 +85,45 @@ nav {
     transition-duration: 0.67s;
 }
 
+/*Log In/Sign Up*/
+.container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container img{
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+.xIcon{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    
+}
+.login, 
+.signUp{
+    padding-top: 50px;
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 25px;
+     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 500px; 
+    height: 650px; 
+    position: relative;
+}
+.signUp{
+    
+}
+.input input{
+    border: 2px solid black;
+}
 
 /* style rules for footer */
 
