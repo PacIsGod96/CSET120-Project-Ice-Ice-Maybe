@@ -24,6 +24,10 @@
     padding-bottom: 30px;
 }
 
+.indent {
+    text-indent: 40px;
+}
+
 /* style rules for body */
 body {
     background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1 );
@@ -31,6 +35,16 @@ body {
 
 p {
     font-family: "Funnel Sans", sans-serif;
+}
+
+a {
+    color: #000;
+    transition-duration: 0.3s;
+}
+
+a:hover {
+    font-weight: bold;
+    transition-duration: 0.3s;
 }
 
 h1, h2 {
@@ -106,8 +120,9 @@ main {
     margin: 0 12%;
 }
 
-main p {
-    text-indent: 40px;
+.hero {
+    width: 400px;
+    padding: 40px 0;
 }
 
 h1, h2 {
@@ -115,6 +130,39 @@ h1, h2 {
     -webkit-text-stroke-width: 0.2px;
 }
 
+div.slider-container {
+    display: flex;
+    justify-content: space-around;
+    background-color: #F9FBFC;
+    overflow: auto;
+    white-space: nowrap;
+    padding: 10px;
+    height: 450px;
+    margin-top: 40px;
+    text-align: center;
+    text-indent: none;
+}
+
+div.slider-container p {
+    display: inline;
+    width: 150px;
+}
+
+div.slider-container img {
+    padding: 10px;
+    width: 200px;
+}
+
+.home-btn {
+    display: block;
+    margin: 30px auto;
+    padding: 25px 15px;
+    border-radius: 20px;
+    border: 1px solid #000;
+    background-color: #ABDEE1;
+    font-size: 1em;
+
+}
 
 /* style rules for footer */
 
@@ -201,11 +249,10 @@ footer h2 {
     }
 
     h1, h2 {
-    -webkit-text-stroke-width: 0.1px;
-    -webkit-text-stroke-color: #000;
-    font-size: 2.5em
+        -webkit-text-stroke-width: 0.1px;
+        -webkit-text-stroke-color: #000;
+        font-size: 2.5em
     }
-
 
     /* footer */
     footer {
@@ -287,5 +334,21 @@ footer h2 {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    /* main */
+    .home-grid {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .home-grid p {
+        display: block;
+        width: 50%;
+        margin-top: 15px;
+    }
+
+    .hero {
+        margin-left: 0;
     }
 }
