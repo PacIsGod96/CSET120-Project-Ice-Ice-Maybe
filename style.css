@@ -128,8 +128,189 @@ main {
 h1, h2 {
     font-size: 2em;
     -webkit-text-stroke-width: 0.2px;
+
 }
 
+/*Log In/Sign Up*/
+.container{
+    position: absolute;
+    top: 87%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.container img{
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+.container h1{
+    font-size: 80px;
+}
+.container label{
+    margin-left: 15px;
+}
+.login-sign-in-labels{
+    border-bottom: 6px solid black;
+    width: 100%;
+    text-align: center;
+    
+}
+.container a{
+    color: black;
+    text-decoration: none;
+}
+.container a:hover{
+    color: blue;
+}
+.containerBtn, #btn{
+    margin-top: 40px;
+    width: 200px;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 50px;
+    background-color: #ABDEE1;
+    margin-bottom: 15px;
+}
+
+#btn {
+    padding: 30px;
+    margin-bottom: 30px;
+}
+#btn p {
+    display: block;
+    margin-top: -10px;
+    margin-left: -37px;
+}
+
+.xIcon{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+.xIcon:hover{
+    background-color: #77B0BF;
+    cursor: pointer;
+}
+.login, 
+.signUp{
+    padding-top: 10px;
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 500px; 
+    height: 650px; 
+    position: relative;
+}
+.login label{
+    font-size: 60px;
+}
+.login input{
+    width: 400px;
+    height: 50px;
+    border-radius: 30px;
+    padding: 10px;
+    font-size: 20px;
+}
+#login-password{
+    margin-bottom: 15px;
+}
+.input{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 10px;
+    
+}
+.input input{
+    border: 4px solid black;
+}
+.signUp{
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.scroll-inner{
+    flex: 1;
+    overflow-y: auto;
+    direction: ltr;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 0;
+}
+.signUp h3{
+    font-size: 40px;
+}
+.general-info{
+    text-align: center;
+    margin-left: 10px;
+}
+.sign-in-names{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+.signUp label{
+    font-size: 35px;
+}
+.signUp input{
+    width: 200px;
+    height: 40px;
+    border-radius: 30px;
+    padding: 8px;
+    font-size: 20px;
+}
+#signUp-username{
+    width: 94%;
+}
+#signUp-password{
+    width: 94%;
+    margin-bottom: 5px;
+}
+#email{
+    width: 94%;
+}
+.location{
+    margin-left: 10px;
+}
+.location h3{
+    text-align: center;
+}
+.location input{
+    width: 94%;
+}
+.card-info{
+    margin-left: 10px;
+}
+.card-info h3{
+    text-align: center;
+}
+.card-name-info{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+.card-info input{
+    width: 94%;
+}
+#middleInitial-card, input{
+    width: 35px;
+}
+.card-name-info input{
+    width: 165px;
+}
+.signUp button{
+    margin: 0 auto;
+  
+/*Style Rules For Main*/
 div.slider-container {
     display: flex;
     justify-content: space-around;
@@ -161,7 +342,6 @@ div.slider-container img {
     border: 1px solid #000;
     background-color: #ABDEE1;
     font-size: 1em;
-
 }
 
 /* style rules for footer */
