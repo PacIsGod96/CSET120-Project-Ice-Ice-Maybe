@@ -51,41 +51,45 @@
         </div>
     </nav>
     <main>
+        <div class="container">
             <div class="login switch">
                 <div class="xIcon">
-                    <img src="Images/x_icon_174151.png" alt="">
+                    <img onclick="back()" src="Images/x_icon_174151.png" alt="">
                 </div>
-                <h1>Login</h1>
+                <div class="login-sign-in-labels">
+                    <h1>Login</h1>
+                </div>
                 <div class="input">
-                    <label for="udername">Username</label>
+                    <label for="username">Username</label>
                     <input type="text " id="login-username" placeholder="username">
                 </div>
                 <div class="input">
                     <label for="password">Password</label>
-                    <input type="text" id="login-password" placeholder="password">
+                    <input type="password" id="login-password" placeholder="password">
                     <a href="#" onclick="passwordToggle('login-password', this)">Show Password</a>
                 </div>
-                <button class="loginBtn">Log In</button>
-                <p><a href="#" id="goToSignUp">Sign Up?</a></p>
+                <button class="loginBtn containerBtn">Log In</button>
+                <a href="#" id="goToSignUp">Sign Up?</a>
             </div>
             <div class="signUp switch">
-                <div class="xIcon">
-                    <img src="Images/x_icon_174151.png" alt="">
-                </div>
-                <h1>Sign Up</h1>
-                <div class="general-info">
-                    <h3>General Info</h3>
-                    <div class="input">
-                        <div>
-                            <div>
-                                <label for="firstName">First Name</label>
-                                <input type="text" id="firstName" placeholder="first">
+                    <div class="xIcon">
+                        <img src="Images/x_icon_174151.png" alt="">
+                    </div>
+                    <div class="login-sign-in-labels">
+                        <h1>Sign Up</h1>
+                    </div>
+                <div class="scroll-inner">
+                    <div class="general-info">
+                        <h3>General Info</h3>
+                        <div class="sign-in-names">
+                            <div class="input">
+                                <label for="firstName">First</label>
+                                <input type="text" id="firstName" placeholder="first name">
                             </div>
-                            <div>
-                                <label for="lastName">Last Name</label>
-                                <input type="text" id="lastName" placeholder="last">
+                            <div class="input">
+                                <label for="lastName">Last</label>
+                                <input type="text" id="lastName" placeholder="last name">
                             </div>
-                        </div>
                     </div>
                     <div class="input">
                         <label for="username">Username</label>
@@ -93,7 +97,7 @@
                     </div>
                     <div class="input">
                         <label for="password">Password</label>
-                        <input type="text" id="signUp-password" placeholder="password">
+                        <input type="password" id="signUp-password" placeholder="password">
                         <a href="#" onclick="passwordToggle('login-password', this)">Show Password</a>
                     </div>
                     <div class="input">
@@ -108,23 +112,28 @@
                         <input type="text" id="address" placeholder="address">
                     </div>
                     <div class="input">
+                        <label for="city">City</label>
+                        <input type="text" id="city" placeholder="city">
+                    </div>
+                    <div class="input">
                         <label for="ZipCode">Zip Code</label>
                         <input type="text" id="ZipCode" placeholder="zip code">
                     </div>
                 </div>
-                <div class="Card-info">
-                    <div class="input">
-                        <div>
-                            <label for="firstNameOnCard">First Name</label>
-                            <input type="text" id="FirstName-card" placeholder="first">
+                <div class="card-info">
+                    <h3>Card Info</h3>
+                    <div class="card-name-info">
+                        <div class="input">
+                            <label for="firstNameOnCard">First</label>
+                            <input type="text" id="firstName-card" placeholder="first name">
                         </div>
-                        <div>
-                            <label for="middleInitialOnCard">Middle Initial</label>
-                            <input type="text" id="MiddleInitial-card" placeholder="middle">
+                        <div class="input">
+                            <label for="middleInitialOnCard">MI</label>
+                            <input type="text" id="middleInitial-card" placeholder="MI">
                         </div>
-                        <div>
-                            <label for="lastNameOnCard">Last Name</label>
-                            <input type="text" id="lastName-card" placeholder="last">
+                        <div class="input">
+                            <label for="lastNameOnCard">Last</label>
+                            <input type="text" id="lastName-card" placeholder="last name">
                         </div>
                     </div>
                     <div class="input">
@@ -136,7 +145,8 @@
                         <input type="text" id="cvv" placeholder="CVV">
                     </div>
                 </div>
-                <button id="SignUpBtn">Sign Up</button>
+                <button class="SignUpBtn containerBtn" id="btn" ><p>Sign Up</p></button>
+                </div>
             </div>
         </div>
         <h1 class="top-space center-txt">Welcome to Ice, Ice Maybe</h1>
