@@ -309,8 +309,10 @@ h1, h2 {
 }
 .signUp button{
     margin: 0 auto;
-  
+}
+
 /*Style Rules For Main*/
+
 div.slider-container {
     display: flex;
     justify-content: space-around;
