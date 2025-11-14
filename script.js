@@ -31,3 +31,50 @@ window.addEventListener('scroll', function() {
 })
 
 //Sign In/Sign Up
+function passwordToggle(id, link){
+    let input = document.getElementById(id)
+    if(input.type == `password`){
+        input.type = `text`
+        link.textContent = `Hide Password`
+    }else{
+        input.type = `password`
+        link.textContent = `Show Password`
+    }
+}
+document.addEventListener("DOMContentLoaded", () =>{
+    let loginSignUpBtn = document.querySelector(".login-SignUp-Btn")
+    let modal = document.getElementById("modal")
+    let xBtn = document.querySelector("xIcon-Btn")
+    let loginPanel = document.querySelector(".login")
+    let signUpPanel = document.querySelector(".signUp")
+
+    loginSignUpBtn.addEventListener("click", () => {
+        modal.style.display = "flex"
+        loginPanel.classList.remove("active")
+        signUpPanel.classList.remove("active")
+    })
+
+    xBtn.addEventListener("click", () => {
+        modal.style.display = "none"
+    })
+
+
+    let switchToSignUpLink = loginPanel.querySelector("a")
+    if(switchToSignUpLink){
+        switchToSignUpLink.addEventListener("click", (e) => {
+            e.preventDefault()
+            loginPanel.classList.add("active")
+            signUpPanel.classList.remove("active")
+        })
+    }
+
+    let switchToLoginLink = signUpPanel.querySelector("button")
+    if(switchToLoginLink){
+        switchToLoginLink.addEventListener("click", (e) => {
+            e.preventDefault()
+            loginPanel.remove("active")
+            signUpPanel.add("active")
+        })
+    }
+
+})
