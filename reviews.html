@@ -52,7 +52,51 @@
         </div>
     </nav>
     <main>
+        <div id="review-container bottom-space">
+
+        </div>
         <h1 class="top-space center-txt">See What Our Customers are Saying!</h1>
+        <p class="indent">Welcome to our Reviews page — where the ice is cold, but the feedback is heartwarming. Here, you can explore what customers are saying about their frozen favorites, leave your own review, and rate your experience with us!</p>
+        <h2 class="top-space bottom-space">Leave a Review</h2>
+        <form class="review-form" id="reviewForm">
+            <div class="center center-txt">
+                <div class="bottom-space">
+                    <label for="name" class="name">Full name:</label>
+                    <input id="name" name="name" type="text" placeholder="Enter Name Here" class="input2" required></div>
+                <div>
+                    <label for="stars">How many stars would you rate us?</label><br>
+                    <input type="number" id="stars" name="stars" min="0" max="5" required><br><br>
+                </div>
+            </div>
+            <label for="review" class="reviews">Write your review here:</label><br>
+            <textarea name="review" rows="8" cols="21" placeholder="Type here..." id="review" class="reviews center" required></textarea><br>
+            <input type="submit" value="Submit" class="submit-btn center">
+        </form>
+        <div class="bottom-space center-txt" id="msg-container">
+                
+        </div>
+        <h2 class="top-space bottom-space">Reviews</h2>
+        <div class="review-container">
+            <div id="review-container" class="bottom-space">
+
+            </div>
+            <div class="bottom-space">
+                <h3>Emily R.</h3>
+                <p>⭐ 5/5</p>
+                <p>“Ice, Ice, Maybe nailed the perfect mix of creativity and flavor. I ordered the Melted Snowman expecting a joke — but it was actually delicious and super refreshing. The whole place feels like stepping into a snow globe.”</p>
+            </div>
+            <div class="bottom-space top-space">
+                <h3>Derrick M.</h3>
+                <p>⭐ 4/5</p>
+                <p>“I came for the novelty and stayed for the Frosty Onion Rings. I don't know how something can be crispy and icy at the same time, but they made it work. Definitely bringing friends next time.”</p>
+            </div>
+            <div class="top-space bottom-space">
+                <h3>Sara T.</h3>
+                <p>⭐ 5/5</p>
+                <p>“The menu is hilarious, the atmosphere is fun, and the staff really commit to the icy vibe. My favorite was the Cactus Watermelon Snow Cone — weird, but in the best way. Highly recommend for anyone looking for something different.”</p>
+            </div>
+        </div>
+        <p class="caption">Scroll to View More!</p>
     </main>
     <footer>
         <p class="copy">Copyright &copy; 2025. All Rights Reserved.</p>
