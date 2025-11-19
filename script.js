@@ -47,17 +47,21 @@ document.addEventListener("DOMContentLoaded", () =>{
     let xBtns = document.querySelectorAll(".xIcon-Btn")
     let loginPanel = document.querySelector(".login")
     let signUpPanel = document.querySelector(".signUp")
+    let loginbtn = document.querySelector(".loginBtn")
 
     loginSignUpBtn.addEventListener("click", () => {
         modal.style.display = "flex"
         loginPanel.classList.add("active")
         signUpPanel.classList.remove("active")
+        document.body.style.position = "fixed"
+        loginbtn.disabled = true
     })
     xBtns.forEach(xBtn => {
         xBtn.addEventListener("click", () => {
             modal.style.display = "none"
             loginPanel.classList.remove("active")
             signUpPanel.classList.remove("active")
+            document.body.style.position = "static"
         })
     })
 
@@ -79,5 +83,6 @@ document.addEventListener("DOMContentLoaded", () =>{
             signUpPanel.classList.remove("active")
         })
     }
+
 
 })
