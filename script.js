@@ -32,28 +32,34 @@ window.addEventListener('scroll', function() {
     }
 })
 // review function
+const reviewForm = document.getElementById("reviewForm");
 
-let name = document.getElementById("name");
-let stars = document.getElementById("stars");
-let review = document.getElementById("review");
-document.getElementById("reviewForm").addEventListener("submit", function(e) {
-      e.preventDefault(); // Stop form from refreshing the page
-    
-      let newReview = {
-        userName: name.value,
-        starRating: stars.value,
-        feedback: review.value
-      }
+if (reviewForm) {  
+    let name = document.getElementById("name");
+    let stars = document.getElementById("stars");
+    let review = document.getElementById("review");
 
-      const container = document.getElementById("review-container");
-      const container2 = document.getElementById("msg-container");
-      container.innerHTML = `
-        <h3>${newReview.userName}</h3>
-        <p>⭐ ${newReview.starRating} / 5</p>
-        <p>\"${newReview.feedback}\"</p>
-      `;
-      container2.innerHTML = "<br><p>Thank You for Your Feedback!</p>"
+    reviewForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        let newReview = {
+            userName: name.value,
+            starRating: stars.value,
+            feedback: review.value
+        };
+
+        const container = document.getElementById("review-container");
+        const container2 = document.getElementById("msg-container");
+
+        container.innerHTML = `
+            <h3>${newReview.userName}</h3>
+            <p>⭐ ${newReview.starRating} / 5</p>
+            <p>"${newReview.feedback}"</p>
+        `;
+
+        container2.innerHTML = "<br><p>Thank You for Your Feedback!</p>";
     });
+}
 
 
 //Sign In/Sign Up
@@ -78,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         modal.style.display = "flex"
         loginPanel.classList.add("active")
         signUpPanel.classList.remove("active")
+        console.log("hello")
     })
     xBtns.forEach(xBtn => {
         xBtn.addEventListener("click", () => {
