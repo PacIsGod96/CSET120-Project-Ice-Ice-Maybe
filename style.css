@@ -148,9 +148,6 @@ h1, h2 {
 }
 
 /*Log In/Sign Up*/
-.container{
-    position: fixed;
-    top: 87%;
 #modal{
     display: none;
     position: fixed;
@@ -265,21 +262,6 @@ h1, h2 {
 .xIcon:hover{
     background-color: #77B0BF;
     cursor: pointer;
-}
-
-.login, 
-.signUp{
-    padding-top: 10px;
-    background-color: white;
-    border: 5px solid black;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 500px; 
-    height: 650px; 
-    position: relative;
 }
 
 .login label{
@@ -404,7 +386,7 @@ h1, h2 {
 }
 
 .signUp button{
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
     display: block;
 }
 
