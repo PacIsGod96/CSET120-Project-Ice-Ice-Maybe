@@ -9,6 +9,8 @@ function nav() {
     }
 }
 
+// responsive desk nav
+
 window.addEventListener('scroll', function() {
     let scrollThreshold = 200;
     let tabNav = this.document.getElementById("tab-nav")
@@ -29,6 +31,30 @@ window.addEventListener('scroll', function() {
         deskNav.style.padding = "0"
     }
 })
+// review function
+
+let name = document.getElementById("name");
+let stars = document.getElementById("stars");
+let review = document.getElementById("review");
+document.getElementById("reviewForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // Stop form from refreshing the page
+    
+      let newReview = {
+        userName: name.value,
+        starRating: stars.value,
+        feedback: review.value
+      }
+
+      const container = document.getElementById("review-container");
+      const container2 = document.getElementById("msg-container");
+      container.innerHTML = `
+        <h3>${newReview.userName}</h3>
+        <p>⭐ ${newReview.starRating} / 5</p>
+        <p>\"${newReview.feedback}\"</p>
+      `;
+      container2.innerHTML = "<br><p>Thank You for Your Feedback!</p>"
+    });
+
 
 //Sign In/Sign Up
 function passwordToggle(id, link){
