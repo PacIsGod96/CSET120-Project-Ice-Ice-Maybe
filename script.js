@@ -31,10 +31,6 @@ window.addEventListener('scroll', function() {
         deskNav.style.padding = "0"
     }
 })
-
-//Sign In/Sign Up
-
-
 // review function
 
 let name = document.getElementById("name");
@@ -60,3 +56,54 @@ document.getElementById("reviewForm").addEventListener("submit", function(e) {
     });
 
 
+//Sign In/Sign Up
+function passwordToggle(id, link){
+    let input = document.getElementById(id)
+    if(input.type == `password`){
+        input.type = `text`
+        link.textContent = `Hide Password`
+    }else{
+        input.type = `password`
+        link.textContent = `Show Password`
+    }
+}
+document.addEventListener("DOMContentLoaded", () =>{
+    let loginSignUpBtn = document.querySelector(".login-SignUp-Btn")
+    let modal = document.getElementById("modal")
+    let xBtns = document.querySelectorAll(".xIcon-Btn")
+    let loginPanel = document.querySelector(".login")
+    let signUpPanel = document.querySelector(".signUp")
+
+    loginSignUpBtn.addEventListener("click", () => {
+        modal.style.display = "flex"
+        loginPanel.classList.add("active")
+        signUpPanel.classList.remove("active")
+    })
+    xBtns.forEach(xBtn => {
+        xBtn.addEventListener("click", () => {
+            modal.style.display = "none"
+            loginPanel.classList.remove("active")
+            signUpPanel.classList.remove("active")
+        })
+    })
+
+
+    let switchToSignUpLink = document.getElementById("goToSignUp")
+    if(switchToSignUpLink){
+        switchToSignUpLink.addEventListener("click", (e) => {
+            e.preventDefault()
+            loginPanel.classList.remove("active")
+            signUpPanel.classList.add("active")
+        })
+    }
+
+    let switchToLoginLink = document.querySelector(".SignUpBtn")
+    if(switchToLoginLink){
+        switchToLoginLink.addEventListener("click", (e) => {
+            e.preventDefault()
+            loginPanel.classList.add("active")
+            signUpPanel.classList.remove("active")
+        })
+    }
+
+})

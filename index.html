@@ -47,12 +47,13 @@
         </div>
         <div>
             <div class="profile-img">
+                <button class="login-SignUp-Btn">Login/Sign Up</button>
                 <a href=""><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
             </div>
         </div>
     </nav>
     <main>
-        <div class="container" style="display: none;">
+        <div class="container>
             <div class="login switch">
                 <div class="xIcon">
                     <img onclick="back()" src="Images/x_icon_174151.png" alt="">
@@ -72,9 +73,11 @@
                 <button class="loginBtn containerBtn">Log In</button>
                 <a href="#" id="goToSignUp">Sign Up?</a>
             </div>
+        <div id="modal">
+            <div class="container">
             <div class="signUp switch">
                     <div class="xIcon">
-                        <img src="Images/x_icon_174151.png" alt="">
+                        <img class="xIcon-Btn" src="Images/x_icon_174151.png" alt="">
                     </div>
                     <div class="login-sign-in-labels">
                         <h1>Sign Up</h1>
@@ -149,7 +152,28 @@
                 <button class="SignUpBtn containerBtn" id="btn" ><p>Sign Up</p></button>
                 </div>
             </div>
+             <div class="login switch">
+                <div class="xIcon">
+                    <img class="xIcon-Btn" src="Images/x_icon_174151.png" alt="">
+                </div>
+                <div class="login-sign-in-labels">
+                    <h1>Login</h1>
+                </div>
+                <div class="input">
+                    <label for="username">Username</label>
+                    <input type="text " id="login-username" placeholder="username">
+                </div>
+                <div class="input">
+                    <label for="password">Password</label>
+                    <input type="password" id="login-password" placeholder="password">
+                    <a href="#" onclick="passwordToggle('login-password', this)">Show Password</a>
+                </div>
+                <button class="loginBtn containerBtn">Log In</button>
+                <a href="#" id="goToSignUp">Sign Up?</a>
+            </div>
         </div>
+        </div>
+        
         <h1 class="top-space center-txt">Welcome to Ice, Ice Maybe</h1>
         <h2 class="center-txt">The Home of Icy Treats and Frozen Eats</h2>
         <div class="home-grid">
