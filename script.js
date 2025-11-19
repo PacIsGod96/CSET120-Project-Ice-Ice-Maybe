@@ -80,14 +80,31 @@ document.addEventListener("DOMContentLoaded", () =>{
     let xBtns = document.querySelectorAll(".xIcon-Btn")
     let loginPanel = document.querySelector(".login")
     let signUpPanel = document.querySelector(".signUp")
-    let loginbtn = document.querySelector(".loginBtn")
+    let signUpBtn = document.querySelector(".signUpBtn")
+    let switchToSignUpLink = document.getElementById("goToSignUp")
+    let loginBtn = document.querySelector(".loginBtn")
+
+    let signUpFirstNameInput = document.getElementById("firstName")
+    let signUpLastNameInput = document.getElementById("lastName")
+    let signUpUsernameInput = document.getElementById("signUp-username")
+    let signUpPasswordInput = document.getElementById("signup-username")
+    let signUpEmailInput = document.getElementById("email")
+    let signUpAddressInput = document.getElementById("address")
+    let signUpCityInput = document.getElementById("city")
+    let signUpZipCodeInput = document.getElementById("zipCode")
+    let signUpCardInfoFirstNameInput = document.getElementById("firstName-card")
+    let signUpCardInfoMiddleInitialInput = document.getElementById("middleInitial-card")
+    let signUpCardInfoLastNameInput = document.getElementById("lastName-card")
+    let signUpCardNumberInput = document.getElementById("cardNumber")
+    let signUpCardCVV = document.getElementById("cvv")
 
     loginSignUpBtn.addEventListener("click", () => {
         modal.style.display = "flex"
         loginPanel.classList.add("active")
         signUpPanel.classList.remove("active")
         document.body.style.position = "fixed"
-        loginbtn.disabled = true
+        loginBtn.disabled = true
+        loginBtn.style.color = "black"
     })
     xBtns.forEach(xBtn => {
         xBtn.addEventListener("click", () => {
@@ -98,24 +115,26 @@ document.addEventListener("DOMContentLoaded", () =>{
         })
     })
 
-
-    let switchToSignUpLink = document.getElementById("goToSignUp")
     if(switchToSignUpLink){
         switchToSignUpLink.addEventListener("click", (e) => {
             e.preventDefault()
             loginPanel.classList.remove("active")
             signUpPanel.classList.add("active")
+            signUpBtn.disabled = true
+            signUpBtn.style.color = "black"
+
+            let scrollContainers= modal.querySelectorAll(".scroll-inner")
+            scrollContainers.forEach(container => {
+                container.scrollTop = 0
+            })
         })
     }
 
-    let switchToLoginLink = document.querySelector(".SignUpBtn")
-    if(switchToLoginLink){
+    if(signUpBtn){
         switchToLoginLink.addEventListener("click", (e) => {
             e.preventDefault()
             loginPanel.classList.add("active")
             signUpPanel.classList.remove("active")
         })
     }
-
-
 })
