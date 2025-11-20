@@ -1,11 +1,11 @@
 // nav hamburger menu
-
+let menu = document.getElementById("menu-links")
 function nav() {
-    let menu = document.getElementById("menu-links")
-    if (menu.style.top === "-200px") {
+    if (menu.style.top === "-210px") {
         menu.style.top = "0";
+        menu.style.zIndex = "9998"
     } else {
-        menu.style.top = "-200px"
+        menu.style.top = "-210px"
     }
 }
 
@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             document.body.style.position = "fixed"
             loginBtn.disabled = true
             loginBtn.style.color = "black"
+            menu.style.top = "-210px"
         })
     })
    

@@ -67,7 +67,9 @@ h2 {
 header{
     display: flex;
     justify-content: center;
-    background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1 );
+    background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1);
+    position: relative;
+    z-index: 9999;
 }
     
 header img{
@@ -107,16 +109,45 @@ nav {
     font-size: 1.75em;
     cursor: pointer;
     position: relative;
-    z-index: 10;
+    z-index: 9999;
     background-color: #fff;
     border-top: 2px solid black;
 }
 
 #menu-links {
     position: relative;
-    top: -200px;
+    top: -210px;
     transition-duration: 0.67s;
     cursor: pointer;
+}
+
+#menu-links .profile-img {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #000;
+    cursor: default;
+}
+
+#menu-links .profile-img a {
+    border-bottom: none;
+    cursor: pointer;
+}
+
+#menu-links img {
+    width: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+#menu-links button {
+    cursor: pointer;
+    border-bottom: 1px solid #000;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #F9FBFC;
+    padding: 10px 0;
+    padding-bottom: 10px;
 }
 
 /* style rules for main */
@@ -161,7 +192,7 @@ h1, h2 {
     background: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999;
 }
 
 #modal .container{
@@ -175,9 +206,7 @@ h1, h2 {
 
 .login, .signUp{
     position: absolute;
-    width: 500px;
-    max-width: 500px;
-    max-height: 620px;
+    width: 80%;
     height: auto;
     padding-top: 40px;
     background-color: white;
@@ -223,7 +252,8 @@ h1, h2 {
     font-size: 80px;
 }
 .container label{
-    margin-left: 15px;
+    display: flex;
+    justify-content: center;
 }
 .login-sign-in-labels{
     border-bottom: 5px solid ;
@@ -247,7 +277,6 @@ h1, h2 {
     margin-bottom: 15px;
 }
 
-
 .xIcon{
     position: absolute;
     top: 15px;
@@ -262,15 +291,18 @@ h1, h2 {
     font-size: 60px;
 }
 .login input{
-    width: 400px;
+    width: 90%;
     height: 50px;
     border-radius: 30px;
     padding: 10px;
     font-size: 20px;
+    margin: 0 auto;
 }
+
 #login-password{
     margin-bottom: 15px;
 }
+
 .input{
     display: flex;
     flex-direction: column;
@@ -297,53 +329,42 @@ h1, h2 {
     text-align: center;
     margin-left: 10px;
 }
-.sign-in-names{
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
 .signUp label{
     font-size: 35px;
 }
 .signUp input{
-    width: 200px;
+    width: 160px;
     height: 40px;
     border-radius: 30px;
     padding: 8px;
     font-size: 20px;
+    margin: 0 auto;
 }
-#signUp-username{
-    width: 94%;
-}
+
 #signUp-password{
-    width: 94%;
     margin-bottom: 5px;
 }
-#email{
-    width: 94%;
-}
+
 .location{
     margin-left: 10px;
 }
 .location h3{
     text-align: center;
 }
-.location input{
-    width: 94%;
-}
+
 .card-info{
     margin-left: 10px;
 }
 .card-info h3{
     text-align: center;
 }
-.card-name-info{
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
+
+.card-name-info {
+    margin: 0 auto;
 }
-.card-info input{
-    width: 94%;
+
+.card-info input, .location input, #email, #signUp-password, #signUp-username{
+    width: 90%;
 }
 #middleInitial-card{
     width: 35px;
@@ -356,8 +377,7 @@ h1, h2 {
     display: block;
 }
 
-
-/*Style Rules For Main*/
+/* Style Rules For Main */
 
 div.slider-container {
     display: flex;
@@ -390,6 +410,74 @@ div.slider-container img {
     border: 1px solid #000;
     background-color: #ABDEE1;
     font-size: 1em;
+}
+
+.review-form {
+    border: 2px solid #fff;
+    border-radius: 40px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.review-form input, .review-form textarea {
+    border: 2px solid #000; 
+}
+
+.input2 {
+    width: 150px;
+}
+
+.submit-btn {
+    padding: 15px 30px;
+    width: 110px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-btn:hover {
+    font-weight: bold;
+    text-decoration: underline;
+    transition-duration: 0.3s;
+}
+
+.submit-btn:active {
+    background-color: darkgray;
+    color: #fff;
+}
+
+.name {
+    display: block;
+    margin-bottom: 0.5px;
+}
+
+textarea {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.review-container {
+    background-color: #F9FBFC;
+    padding: 30px;
+    
+    border-radius: 50px 50px 0 0;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.review-container::-webkit-scrollbar {
+    display: none;
+}
+
+.caption {
+    background-color: #F9FBFC;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    text-align: center;
 }
 
 /* style rules for footer */
@@ -463,12 +551,46 @@ footer h2 {
         max-width: 100%;
         margin-right: 30px;
     }
+
     .tab-links{
         display: flex;
         justify-content: space-between;
         position: relative;
         margin-left: 60px;
         align-items: center;
+    }
+
+    .tab-links button {
+        margin-top: 20px;
+        width: 100px;
+        height: 60px;
+        border: 2px solid black;
+        border-radius: 50px;
+        background-color: #ABDEE1;
+        margin-bottom: 20px;
+    }
+
+    /* signup/login */
+    .login, .signUp{
+        width: 500px;
+        max-width: 500px;
+        max-height: 620px; 
+    }
+
+    .login input{
+        width: 400px;
+    }
+
+    .card-name-info {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 0 auto;
+    } 
+
+    .sign-in-names {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        text-align: center;
     }
 
     /* main */
@@ -480,6 +602,17 @@ footer h2 {
         -webkit-text-stroke-width: 0.1px;
         -webkit-text-stroke-color: #000;
         font-size: 2.5em
+    }
+
+    /* reviews form */
+
+    .reviews {
+        display: flex;
+        justify-content: center;
+    }
+
+    textarea {
+        width: 45%;
     }
 
     /* footer */
