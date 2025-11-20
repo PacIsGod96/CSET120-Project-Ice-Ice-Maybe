@@ -75,7 +75,7 @@ function passwordToggle(id, link){
     }
 }
 document.addEventListener("DOMContentLoaded", () =>{
-    let loginSignUpBtn = document.querySelector(".login-SignUp-Btn")
+    let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
     let modal = document.getElementById("modal")
     let xBtns = document.querySelectorAll(".xIcon-Btn")
     let loginPanel = document.querySelector(".login")
@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     let switchToSignUpLink = document.getElementById("goToSignUp")
     let loginBtn = document.querySelector(".loginBtn")
 
+    let signUpInputs = document.querySelector(".signUp").querySelectorAll("input")
     let signUpFirstNameInput = document.getElementById("firstName")
     let signUpLastNameInput = document.getElementById("lastName")
     let signUpUsernameInput = document.getElementById("signUp-username")
@@ -98,14 +99,17 @@ document.addEventListener("DOMContentLoaded", () =>{
     let signUpCardNumberInput = document.getElementById("cardNumber")
     let signUpCardCVV = document.getElementById("cvv")
 
-    loginSignUpBtn.addEventListener("click", () => {
-        modal.style.display = "flex"
-        loginPanel.classList.add("active")
-        signUpPanel.classList.remove("active")
-        document.body.style.position = "fixed"
-        loginBtn.disabled = true
-        loginBtn.style.color = "black"
+    loginSignUpBtn.forEach(btn => {
+        btn.addEventListener("click", () => {
+            modal.style.display = "flex"
+            loginPanel.classList.add("active")
+            signUpPanel.classList.remove("active")
+            document.body.style.position = "fixed"
+            loginBtn.disabled = true
+            loginBtn.style.color = "black"
+        })
     })
+   
     xBtns.forEach(xBtn => {
         xBtn.addEventListener("click", () => {
             modal.style.display = "none"
@@ -137,4 +141,22 @@ document.addEventListener("DOMContentLoaded", () =>{
             signUpPanel.classList.remove("active")
         })
     }
+
+    //function to check and see if all the inputs were filled 
+    function inputCheck(){
+        let contains = 0
+        for(let i = 0; i < signUpInputs.length; i++){
+            if(signUpInputs[i].value.trim() !== ""){
+                contains = contains + 1
+            }
+        }
+        if(contains == 13){
+            signUpBtn.disabled = false 
+        }else{
+            signUpBtn.disabled = true
+        }
+    }
+
+    //function to store the info
+
 })
