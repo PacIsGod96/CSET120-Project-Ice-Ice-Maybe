@@ -161,3 +161,60 @@ document.addEventListener("DOMContentLoaded", () =>{
     //function to store the info
 
 })
+
+// menu
+
+class menuItem {
+    constructor(name, desc, img, price) {
+        this.name = name;
+        this.desc = desc;
+        this.img = img;
+        this.price = price;
+    }
+
+    toHTML() {
+        return `
+            <div class="menu-item">
+                ${this.img}
+                <h3>${this.name}</h3>
+                <p>${this.desc}</p>
+                <span class="price">${this.price}</span>
+            </div>
+        `;
+    }
+}
+
+
+let items = [
+    item1 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item2 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item3 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item4 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item5 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item6 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item7 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item8 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item9 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item10 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item11 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item12 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item13 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item14 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item15 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item16 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item17 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item18 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item19 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67"),
+    item20 = new menuItem("Item", "description", `<img src="Images/404.png" alt="img">`,"$67")
+]
+
+function appendMenu() {
+    let menuContainer = document.getElementById("menuContainer");
+
+    for(let i = 0; i <= 20; i++) {
+        let item = items[i];
+        menuContainer.innerHTML = item.toHTML();
+    }
+}
+
+appendMenu();

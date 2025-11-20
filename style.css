@@ -29,9 +29,6 @@
 }
 
 /* style rules for body */
-body {
-    background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1 );
-}
 
 body button{
     cursor: pointer;
@@ -152,7 +149,8 @@ nav {
 
 /* style rules for main */
 main {
-    margin: 0 12%;
+    padding: 0 12%;
+    background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1);
 }
 
 .hero {
@@ -221,9 +219,9 @@ h1, h2 {
     pointer-events: none;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    
+    align-items: stretch;   
 }
+
 .login.active, .signUp.active{
     opacity: 1;
     pointer-events: auto;
@@ -480,6 +478,11 @@ textarea {
     text-align: center;
 }
 
+/* menu */
+#menuContainer img {
+    width: 200px;
+}
+
 /* style rules for footer */
 
 footer {
@@ -595,7 +598,7 @@ footer h2 {
 
     /* main */
     main {
-        margin: 0 16%;
+        padding: 0 16%;
     }
 
     h1, h2 {
@@ -644,7 +647,7 @@ footer h2 {
 
 
 /* desktop */
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1050px) {
 
     #desk-nav{
         display: flex;
@@ -652,6 +655,7 @@ footer h2 {
         background-color: #F9FBFC;
         transition-duration: 0.3s;
         font-family: "Quintessential", serif;
+        max-width: 100%;
     }
 
     nav a{
@@ -683,7 +687,6 @@ footer h2 {
     }
 
     .profile-img{
-        margin-right: 50px;
         margin-top: 5px;
     }
 
