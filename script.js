@@ -82,22 +82,11 @@ document.addEventListener("DOMContentLoaded", () =>{
     let signUpPanel = document.querySelector(".signUp")
     let signUpBtn = document.querySelector(".signUpBtn")
     let switchToSignUpLink = document.getElementById("goToSignUp")
+    let switchToLoginLink = document.getElementsByClassName("signUpBtn")[0]
     let loginBtn = document.querySelector(".loginBtn")
-
     let signUpInputs = document.querySelector(".signUp").querySelectorAll("input")
-    let signUpFirstNameInput = document.getElementById("firstName")
-    let signUpLastNameInput = document.getElementById("lastName")
-    let signUpUsernameInput = document.getElementById("signUp-username")
-    let signUpPasswordInput = document.getElementById("signup-username")
-    let signUpEmailInput = document.getElementById("email")
-    let signUpAddressInput = document.getElementById("address")
-    let signUpCityInput = document.getElementById("city")
-    let signUpZipCodeInput = document.getElementById("zipCode")
-    let signUpCardInfoFirstNameInput = document.getElementById("firstName-card")
-    let signUpCardInfoMiddleInitialInput = document.getElementById("middleInitial-card")
-    let signUpCardInfoLastNameInput = document.getElementById("lastName-card")
-    let signUpCardNumberInput = document.getElementById("cardNumber")
-    let signUpCardCVV = document.getElementById("cvv")
+    let loginInputs = document.querySelector(".login").querySelectorAll("input")
+    let users = []
 
     loginSignUpBtn.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -126,37 +115,103 @@ document.addEventListener("DOMContentLoaded", () =>{
             signUpPanel.classList.add("active")
             signUpBtn.disabled = true
             signUpBtn.style.color = "black"
-
+            
             let scrollContainers= modal.querySelectorAll(".scroll-inner")
             scrollContainers.forEach(container => {
                 container.scrollTop = 0
             })
+
+            inputCheck()
         })
+        
     }
 
     if(signUpBtn){
         switchToLoginLink.addEventListener("click", (e) => {
             e.preventDefault()
+            let newUser = storeSignUpInfo()
+            console.log(newUser)
+            for(let i = 0; i < signUpInputs.length; i++){
+                signUpInputs[i].value = ""
+            }   
             loginPanel.classList.add("active")
             signUpPanel.classList.remove("active")
+
         })
     }
-
     //function to check and see if all the inputs were filled 
     function inputCheck(){
-        let contains = 0
+        let allFilled = true
         for(let i = 0; i < signUpInputs.length; i++){
-            if(signUpInputs[i].value.trim() !== ""){
-                contains = contains + 1
+            if(signUpInputs[i].value.trim() == ""){
+                allFilled = false
+                break
             }
         }
-        if(contains == 13){
-            signUpBtn.disabled = false 
-        }else{
-            signUpBtn.disabled = true
+        signUpBtn.disabled = !allFilled
+        
+    }
+    
+    for(let i = 0; i < signUpInputs.length; i++){
+        signUpInputs[i].addEventListener("input", inputCheck)
+    }
+
+    inputCheck()
+
+    function loginInputCheck(){
+        let allFilled = true
+        for(let i = 0; i < loginInputs.length; i++){
+            if(loginInputs[i].value.trim() == ""){
+                allFilled = false
+                break
+            }
+            loginBtn.disabled = false
         }
     }
 
     //function to store the info
+    function storeSignUpInfo(){
+        let newUser = {}
+        let inputMap = {
+            "firstName": "firstname",
+            "lastName": "lastName",
+            "username": "signUp-username",
+            "password": "signUp-password",
+            "email": "email",
+            "address": "address",
+            "city": "city",
+            "zipcode": "zipCode",
+            "firstNameOnCard": "firstName-card",
+            "middleInitial": "middleInitial",
+            "lastNameOnCard": "lastName-card",
+            "cardNumber": "cardNumber",
+            "cvv": "cvv"
+        }
 
+        signUpInputs.forEach(input => {
+            let propName = inputMap[input.id] || input.id
+            newUser[propName] = input.value.trim()
+        })
+
+        users.push(newUser)
+
+        return newUser
+    }
+
+    if(loginBtn){
+        loginBtn.addEventListener("click", (e) => {
+            e.preventDefault
+            let loginUsername = document.getElementById("login-username").value.trim()
+            let loginPassword = document.getElementById("login-password").value.trim()
+            for(let i = 0; i < users.length; i++){
+                if(loginUsername == users[i].username && loginPassword == users[i].password){
+                    modal.style.display = "none"
+                    loginPanel.classList.remove("active")
+                    signUpPanel.classList.remove("active")
+                    document.body.style.position = "static"
+                    break
+                }
+            }
+        })
+    }
 })
