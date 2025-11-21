@@ -479,8 +479,47 @@ textarea {
 }
 
 /* menu */
-#menuContainer img {
+#coneContainer, #sidesContainer, #drinksContainer {
+    display: flex;
+    justify-content: space-evenly;
+    overflow-x: scroll;
+    max-width: 100%;
+    margin: 0 auto;
+    border: 4px dashed #F9FBFC;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#coneContainer::-webkit-scrollbar, #sidesContainer::-webkit-scrollbar, #drinksContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-item {
+    margin: 0 50px;
+}
+
+#coneContainer img, #sidesContainer img, #drinksContainer img {
+    display: block;
     width: 200px;
+    margin: 0 auto;
+}
+
+.menu-item {
+    margin-bottom: 20px;
+    overflow-wrap:break-word;
+}
+
+.cart-btn {
+    background-color: #F9FBFC;
+    border-radius: 20px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.cart-btn:hover {
+    font-weight: bold;
+    background-color: #98e9ff;
+    transition-duration: 0.3s
 }
 
 /* style rules for footer */
@@ -714,5 +753,5 @@ footer h2 {
 
     .hero {
         margin-left: 0;
-    }
+    }    
 }
