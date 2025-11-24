@@ -222,6 +222,12 @@ h1, h2 {
     align-items: stretch;   
 }
 
+#alrHaveAccount{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
 .login.active, .signUp.active{
     opacity: 1;
     pointer-events: auto;
@@ -366,6 +372,7 @@ h1, h2 {
 }
 #middleInitial-card{
     width: 35px;
+    text-align: center;
 }
 .card-name-info input{
     width: 165px;

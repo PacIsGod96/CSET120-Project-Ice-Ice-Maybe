@@ -74,7 +74,13 @@ function passwordToggle(id, link){
         link.textContent = `Show Password`
     }
 }
-document.addEventListener("DOMContentLoaded", () =>{
+window.onload = () => {
+    if(localStorage.getItem("loggedIn") == "true"){
+        let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
+        loginSignUpBtn.forEach(btn => {
+            btn.style.display = "none"
+        })
+    }
     let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
     let modal = document.getElementById("modal")
     let xBtns = document.querySelectorAll(".xIcon-Btn")
@@ -82,22 +88,18 @@ document.addEventListener("DOMContentLoaded", () =>{
     let signUpPanel = document.querySelector(".signUp")
     let signUpBtn = document.querySelector(".signUpBtn")
     let switchToSignUpLink = document.getElementById("goToSignUp")
+    let alrHaveAccount = document.getElementById("alrHaveAccount")
+    let switchToLoginLink = document.getElementsByClassName("signUpBtn")[0]
     let loginBtn = document.querySelector(".loginBtn")
-
     let signUpInputs = document.querySelector(".signUp").querySelectorAll("input")
-    let signUpFirstNameInput = document.getElementById("firstName")
-    let signUpLastNameInput = document.getElementById("lastName")
-    let signUpUsernameInput = document.getElementById("signUp-username")
-    let signUpPasswordInput = document.getElementById("signup-username")
-    let signUpEmailInput = document.getElementById("email")
-    let signUpAddressInput = document.getElementById("address")
-    let signUpCityInput = document.getElementById("city")
-    let signUpZipCodeInput = document.getElementById("zipCode")
-    let signUpCardInfoFirstNameInput = document.getElementById("firstName-card")
-    let signUpCardInfoMiddleInitialInput = document.getElementById("middleInitial-card")
-    let signUpCardInfoLastNameInput = document.getElementById("lastName-card")
-    let signUpCardNumberInput = document.getElementById("cardNumber")
-    let signUpCardCVV = document.getElementById("cvv")
+    let loginInputs = document.querySelector(".login").querySelectorAll("input")
+    let users = JSON.parse(localStorage.getItem("users")) || []
+    let managerCredentials = {
+        managerPassword: "snowyIce67!",
+        managerUsername: "williamsWiley2209"
+    }
+    let customer = false 
+    let manager = false 
 
     loginSignUpBtn.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -113,10 +115,7 @@ document.addEventListener("DOMContentLoaded", () =>{
    
     xBtns.forEach(xBtn => {
         xBtn.addEventListener("click", () => {
-            modal.style.display = "none"
-            loginPanel.classList.remove("active")
-            signUpPanel.classList.remove("active")
-            document.body.style.position = "static"
+            closeModal()
         })
     })
 
@@ -127,38 +126,168 @@ document.addEventListener("DOMContentLoaded", () =>{
             signUpPanel.classList.add("active")
             signUpBtn.disabled = true
             signUpBtn.style.color = "black"
-
+            
             let scrollContainers= modal.querySelectorAll(".scroll-inner")
             scrollContainers.forEach(container => {
                 container.scrollTop = 0
             })
+
+            inputCheck()
+        })
+        
+    }
+
+    if(alrHaveAccount){
+        alrHaveAccount.addEventListener("click", (e) =>{
+            e.preventDefault()
+            for(let i = 0; i < signUpInputs.length; i++){
+                signUpInputs[i].value = ""
+            }   
+            loginPanel.classList.add("active")
+            signUpPanel.classList.remove("active")
         })
     }
 
     if(signUpBtn){
         switchToLoginLink.addEventListener("click", (e) => {
             e.preventDefault()
-            loginPanel.classList.add("active")
-            signUpPanel.classList.remove("active")
+            let newUser = storeSignUpInfo()
+            if(newUser){
+                for(let i = 0; i < signUpInputs.length; i++){
+                    signUpInputs[i].value = ""
+                }   
+                loginPanel.classList.add("active")
+                signUpPanel.classList.remove("active")
+            }
         })
+        loginInputCheck()
     }
-
     //function to check and see if all the inputs were filled 
     function inputCheck(){
-        let contains = 0
+        let allFilled = true
         for(let i = 0; i < signUpInputs.length; i++){
-            if(signUpInputs[i].value.trim() !== ""){
-                contains = contains + 1
+            if(signUpInputs[i].value.trim() == ""){
+                allFilled = false
+                break
             }
         }
-        if(contains == 13){
-            signUpBtn.disabled = false 
-        }else{
-            signUpBtn.disabled = true
+        signUpBtn.disabled = !allFilled
+        
+    }
+    
+    for(let i = 0; i < signUpInputs.length; i++){
+        signUpInputs[i].addEventListener("input", inputCheck)
+    }
+
+    inputCheck()
+    loginInputCheck()
+
+    function loginInputCheck(){
+        let allFilled = true
+        for(let i = 0; i < loginInputs.length; i++){
+            if(loginInputs[i].value.trim() == ""){
+                allFilled = false
+                break
+            }
         }
+        loginBtn.disabled = !allFilled
+    }
+
+    for(let i = 0; i < loginInputs.length; i++){
+        loginInputs[i].addEventListener("input", loginInputCheck)
+    }
+
+    function isUserDupliacte(username, email, password){
+        return users.some(user => user.username == username || user.email == email || user.password == password)
     }
 
     //function to store the info
+    function storeSignUpInfo(){
+        let newUser = {}
+        let inputMap = {
+            "firstName": "firstname",
+            "lastName": "lastName",
+            "signUp-username": "username",
+            "signUp-password": "password",
+            "email": "email",
+            "address": "address",
+            "city": "city",
+            "zipcode": "zipCode",
+            "firstNameOnCard": "firstName-card",
+            "middleInitial-card": "middleInitial",
+            "lastNameOnCard": "lastName-card",
+            "cardNumber": "cardNumber",
+            "cvv": "cvv"
+        }
+
+        signUpInputs.forEach(input => {
+            let propName = inputMap[input.id] || input.id
+            newUser[propName] = input.value.trim()
+        })
+
+        if(isUserDupliacte(newUser.username, newUser.email, newUser.password)){
+            for(let i = 0; i < signUpInputs.length; i++){
+                    signUpInputs[i].value = ""
+            }  
+            let scrollContainers= modal.querySelectorAll(".scroll-inner")
+            scrollContainers.forEach(container => {
+                container.scrollTop = 0
+            })
+            alert("Username, Email, or Password already exist")
+            return null
+        }
+        users.push(newUser)
+        localStorage.setItem("users", JSON.stringify(users))
+        return newUser
+    }
+
+    if(loginBtn){
+        loginBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            let loginUsername = document.getElementById("login-username").value.trim()
+            let loginPassword = document.getElementById("login-password").value.trim()
+            console.log("users array:", users)
+            console.log("Login username:", loginUsername)
+            console.log("Login password:", loginPassword)
+            let found = false
+            if(loginUsername == managerCredentials.managerUsername && loginPassword == managerCredentials.managerPassword){
+                manager = true
+                found = true
+            }else {
+                for(let i = 0; i < users.length; i++){
+                    if(loginUsername == users[i].username && loginPassword == users[i].password){
+                        customer = true
+                        found = true
+                        break
+                    }
+                }
+            }
+
+            if(found){
+                localStorage.setItem("loggedIn", "true")
+                closeModal()
+                for(let i = 0; i < loginInputs.length; i++){
+                    loginInputs[i].value = ""
+                }
+                for(let j = 0; j < loginSignUpBtn.length; j++){
+                loginSignUpBtn[j].style.display = "none"
+            }
+            }else{
+                for(let i = 0; i < loginInputs.length; i++){
+                    loginInputs[i].value = ""
+                }
+                alert("Incorrect Username or Password")
+            }
+        })
+
+        function closeModal(){
+            modal.style.display = "none"
+            loginPanel.classList.remove("active")
+            signUpPanel.classList.remove("active")
+            document.body.style.position = "static"
+        }
+    }
+}
 
 })
 
@@ -246,3 +375,4 @@ function appendDrinks() {
 appendsnowCones();
 appendSides();
 appendDrinks();
+
