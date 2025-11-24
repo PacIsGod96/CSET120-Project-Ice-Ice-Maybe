@@ -74,7 +74,13 @@ function passwordToggle(id, link){
         link.textContent = `Show Password`
     }
 }
-document.addEventListener("DOMContentLoaded", () =>{
+window.onload = () => {
+    if(localStorage.getItem("loggedIn") == "true"){
+        let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
+        loginSignUpBtn.forEach(btn => {
+            btn.style.display = "none"
+        })
+    }
     let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
     let modal = document.getElementById("modal")
     let xBtns = document.querySelectorAll(".xIcon-Btn")
@@ -87,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     let loginBtn = document.querySelector(".loginBtn")
     let signUpInputs = document.querySelector(".signUp").querySelectorAll("input")
     let loginInputs = document.querySelector(".login").querySelectorAll("input")
-    let users = []
+    let users = JSON.parse(localStorage.getItem("users")) || []
     let managerCredentials = {
         managerPassword: "snowyIce67!",
         managerUsername: "williamsWiley2209"
@@ -132,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     if(alrHaveAccount){
         alrHaveAccount.addEventListener("click", (e) =>{
-            e.preventDefault
+            e.preventDefault()
             for(let i = 0; i < signUpInputs.length; i++){
                 signUpInputs[i].value = ""
             }   
@@ -230,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             return null
         }
         users.push(newUser)
-
+        localStorage.setItem("users", JSON.stringify(users))
         return newUser
     }
 
@@ -257,6 +263,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             }
 
             if(found){
+                localStorage.setItem("loggedIn", "true")
                 closeModal()
                 for(let i = 0; i < loginInputs.length; i++){
                     loginInputs[i].value = ""
@@ -279,4 +286,5 @@ document.addEventListener("DOMContentLoaded", () =>{
             document.body.style.position = "static"
         }
     }
-})
+}
+
