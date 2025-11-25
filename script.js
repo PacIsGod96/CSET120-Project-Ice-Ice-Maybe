@@ -67,7 +67,13 @@ function passwordToggle(id, link){
         link.textContent = `Show Password`
     }
 }
-document.addEventListener("DOMContentLoaded", () =>{
+window.onload = () => {
+    if(localStorage.getItem("loggedIn") == "true"){
+        let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
+        loginSignUpBtn.forEach(btn => {
+            btn.style.display = "none"
+        })
+    }
     let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
     let modal = document.getElementById("modal")
     let xBtns = document.querySelectorAll(".xIcon-Btn")
@@ -75,22 +81,18 @@ document.addEventListener("DOMContentLoaded", () =>{
     let signUpPanel = document.querySelector(".signUp")
     let signUpBtn = document.querySelector(".signUpBtn")
     let switchToSignUpLink = document.getElementById("goToSignUp")
+    let alrHaveAccount = document.getElementById("alrHaveAccount")
+    let switchToLoginLink = document.getElementsByClassName("signUpBtn")[0]
     let loginBtn = document.querySelector(".loginBtn")
-
-    let signUpInputs = document.querySelector(".signUp").querySelectorAll("input")
-    let signUpFirstNameInput = document.getElementById("firstName")
-    let signUpLastNameInput = document.getElementById("lastName")
-    let signUpUsernameInput = document.getElementById("signUp-username")
-    let signUpPasswordInput = document.getElementById("signup-username")
-    let signUpEmailInput = document.getElementById("email")
-    let signUpAddressInput = document.getElementById("address")
-    let signUpCityInput = document.getElementById("city")
-    let signUpZipCodeInput = document.getElementById("zipCode")
-    let signUpCardInfoFirstNameInput = document.getElementById("firstName-card")
-    let signUpCardInfoMiddleInitialInput = document.getElementById("middleInitial-card")
-    let signUpCardInfoLastNameInput = document.getElementById("lastName-card")
-    let signUpCardNumberInput = document.getElementById("cardNumber")
-    let signUpCardCVV = document.getElementById("cvv")
+    let signUpInputs = signUpPanel ? signUpPanel.querySelectorAll("input") : []
+    let loginInputs = loginPanel ? loginPanel.querySelectorAll("input") : []
+    let users = JSON.parse(localStorage.getItem("users")) || []
+    let managerCredentials = {
+        managerPassword: "snowyIce67!",
+        managerUsername: "williamsWiley2209"
+    }
+    let customer = false 
+    let manager = false 
 
     loginSignUpBtn.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -106,10 +108,7 @@ document.addEventListener("DOMContentLoaded", () =>{
    
     xBtns.forEach(xBtn => {
         xBtn.addEventListener("click", () => {
-            modal.style.display = "none"
-            loginPanel.classList.remove("active")
-            signUpPanel.classList.remove("active")
-            document.body.style.position = "static"
+            closeModal()
         })
     })
 
@@ -120,122 +119,250 @@ document.addEventListener("DOMContentLoaded", () =>{
             signUpPanel.classList.add("active")
             signUpBtn.disabled = true
             signUpBtn.style.color = "black"
-
+            
             let scrollContainers= modal.querySelectorAll(".scroll-inner")
             scrollContainers.forEach(container => {
                 container.scrollTop = 0
             })
+
+            inputCheck()
+        })
+        
+    }
+
+    if(alrHaveAccount){
+        alrHaveAccount.addEventListener("click", (e) =>{
+            e.preventDefault()
+            for(let i = 0; i < signUpInputs.length; i++){
+                signUpInputs[i].value = ""
+            }   
+            loginPanel.classList.add("active")
+            signUpPanel.classList.remove("active")
         })
     }
 
     if(signUpBtn){
         switchToLoginLink.addEventListener("click", (e) => {
             e.preventDefault()
-            loginPanel.classList.add("active")
-            signUpPanel.classList.remove("active")
+            let newUser = storeSignUpInfo()
+            if(newUser){
+                for(let i = 0; i < signUpInputs.length; i++){
+                    signUpInputs[i].value = ""
+                }   
+                loginPanel.classList.add("active")
+                signUpPanel.classList.remove("active")
+            }
         })
+        loginInputCheck()
     }
-
     //function to check and see if all the inputs were filled 
     function inputCheck(){
-        let contains = 0
+        if(!signUpPanel) return
+        let allFilled = true
         for(let i = 0; i < signUpInputs.length; i++){
-            if(signUpInputs[i].value.trim() !== ""){
-                contains = contains + 1
+            if(signUpInputs[i].value.trim() == ""){
+                allFilled = false
+                break
             }
         }
-        if(contains == 13){
-            signUpBtn.disabled = false 
-        }else{
-            signUpBtn.disabled = true
+        signUpBtn.disabled = !allFilled
+        
+    }
+    
+    for(let i = 0; i < signUpInputs.length; i++){
+        signUpInputs[i].addEventListener("input", inputCheck)
+    }
+
+    inputCheck()
+    loginInputCheck()
+
+    function loginInputCheck(){
+        if(!loginPanel) return
+        let allFilled = true
+        for(let i = 0; i < loginInputs.length; i++){
+            if(loginInputs[i].value.trim() == ""){
+                allFilled = false
+                break
+            }
         }
+        loginBtn.disabled = !allFilled
+    }
+
+    for(let i = 0; i < loginInputs.length; i++){
+        loginInputs[i].addEventListener("input", loginInputCheck)
+    }
+
+    function isUserDupliacte(username, email, password){
+        return users.some(user => user.username == username || user.email == email || user.password == password)
     }
 
     //function to store the info
+    function storeSignUpInfo(){
+        let newUser = {}
+        let inputMap = {
+            "firstName": "firstname",
+            "lastName": "lastName",
+            "signUp-username": "username",
+            "signUp-password": "password",
+            "email": "email",
+            "address": "address",
+            "city": "city",
+            "zipcode": "zipCode",
+            "firstNameOnCard": "firstName-card",
+            "middleInitial-card": "middleInitial",
+            "lastNameOnCard": "lastName-card",
+            "cardNumber": "cardNumber",
+            "cvv": "cvv"
+        }
 
-})
+        signUpInputs.forEach(input => {
+            let propName = inputMap[input.id] || input.id
+            newUser[propName] = input.value.trim()
+        })
 
-// menu
-
-class menuItem {
-    constructor(name, desc, img, price) {
-        this.name = name;
-        this.desc = desc;
-        this.img = img;
-        this.price = price;
+        if(isUserDupliacte(newUser.username, newUser.email, newUser.password)){
+            for(let i = 0; i < signUpInputs.length; i++){
+                    signUpInputs[i].value = ""
+            }  
+            let scrollContainers= modal.querySelectorAll(".scroll-inner")
+            scrollContainers.forEach(container => {
+                container.scrollTop = 0
+            })
+            alert("Username, Email, or Password already exist")
+            return null
+        }
+        users.push(newUser)
+        localStorage.setItem("users", JSON.stringify(users))
+        return newUser
     }
 
-    toHTML() {
-        return `
-            <div class="menu-item center-txt">
-                <div>
-                    ${this.img}
-                    <h3>${this.name}</h3>
-                    <p><em>${this.desc}</em></p>
-                    <p class="price">${this.price}</p>
-                    <button class="cart-btn">Add To Cart</button>
+    if(loginBtn){
+        loginBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            let loginUsername = document.getElementById("login-username").value.trim()
+            let loginPassword = document.getElementById("login-password").value.trim()
+            console.log("users array:", users)
+            console.log("Login username:", loginUsername)
+            console.log("Login password:", loginPassword)
+            let found = false
+            if(loginUsername == managerCredentials.managerUsername && loginPassword == managerCredentials.managerPassword){
+                manager = true
+                found = true
+            }else {
+                for(let i = 0; i < users.length; i++){
+                    if(loginUsername == users[i].username && loginPassword == users[i].password){
+                        customer = true
+                        found = true
+                        break
+                    }
+                }
+            }
+
+            if(found){
+                localStorage.setItem("loggedIn", "true")
+                closeModal()
+                for(let i = 0; i < loginInputs.length; i++){
+                    loginInputs[i].value = ""
+                }
+                for(let j = 0; j < loginSignUpBtn.length; j++){
+                    loginSignUpBtn[j].style.display = "none"
+                }
+            }else{
+                for(let i = 0; i < loginInputs.length; i++){
+                    loginInputs[i].value = ""
+                }
+                alert("Incorrect Username or Password")
+            }
+        })
+
+        function closeModal(){
+            modal.style.display = "none"
+            loginPanel.classList.remove("active")
+            signUpPanel.classList.remove("active")
+            document.body.style.position = "static"
+        }
+    }
+
+    class menuItem {
+        constructor(name, desc, img, price) {
+            this.name = name;
+            this.desc = desc;
+            this.img = img;
+            this.price = price;
+        }
+
+        toHTML() {
+            return `
+                <div class="menu-item center-txt">
+                    <div>
+                        ${this.img}
+                        <h3>${this.name}</h3>
+                        <p><em>${this.desc}</em></p>
+                        <p class="price">${this.price}</p>
+                        <button class="cart-btn">Add To Cart</button>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
+      
+      let snowcones = [
+        item1 = new menuItem("Salisbury Steak", "Cooked to your liking", `<img src="Images/steak.png" alt="img">`,"$67"),
+        item2 = new menuItem("Clear Flavor #7", "We refuse to explain.", `<img src="Images/clear.png" alt="img">`,"$67"),
+        item3 = new menuItem("Vanilla Ice", "Robert Matthew Van Winkle", `<img src="Images/vanilla.png" alt="img">`,"$67"),
+        item4 = new menuItem("Pickle Party", "Brine Forward.", `<img src="Images/pickle.png" alt="img">`,"$67"),
+        item5 = new menuItem("Screaming Into the Void", "Absolutely no sweetness. Only echo.", `<img src="Images/void.png" alt="img">`,"$67"),
+        item6 = new menuItem("Pool Water", "Just a hint of Chlorine", `<img src="Images/pool.png" alt="img">`,"$67"),
+        item7 = new menuItem("404: Flavor Not Found", "Leaves the taste of error on your tongue", `<img src="Images/404.png" alt="img">`,"$67"),
+        item8 = new menuItem("Red 40", "Self Explanitory", `<img src="Images/red.png" alt="img">`,"$67"),
+        item9 = new menuItem("Cactus Melon", "Sweet, prickly, and strangely energizing.", `<img src="Images/cactus.png" alt="img">`,"$67"),
+        item10 = new menuItem("Radioactive Banana", "glows just a little too brightly", `<img src="Images/banana.png" alt="img">`,"$67"),
+        item11 = new menuItem("Microplastics", "Served with a tiny biodegradable spoon", `<img src="Images/plastic.png" alt="img">`,"$67"),
+        item12 = new menuItem("Electric Cumcumber",'faint aftertaste of "why is this carbonated?"', `<img src="Images/cucumber.png" alt="img">`,"$67"),
+    ]
+
+    let sides = [
+        sides1 = new menuItem("Icy Spicy Nachos", "We don't know how we did it either", `<img src="Images/nachos.png" alt="img">`,"$67"),
+        sides2 = new menuItem("Frozen Mozzerella Snowballs", "Cheese that looks like Snowballs", `<img src="Images/motzballs.png" alt="img">`,"$67"),
+        sides3 = new menuItem("Freezer-Burned Garlic Bread", "Edges burned and Icy", `<img src="Images/bread.png" alt="img">`,"$67"),
+        sides4 = new menuItem("Ice-Lattice Onion Rings", "Crunchy in all the Wrong Ways", `<img src="Images/rings.png" alt="img">`,"$67")
+    ]
+
+    let drinks = [
+        drink1 = new menuItem("Frozen Hot Coco", "Deliciously Confusing", `<img src="Images/hot-coco.png" alt="img">`,"$67"),
+        drink2 = new menuItem("Water", "But as a solid", `<img src="Images/water.png" alt="img">`,"$67"),
+        drink3 = new menuItem("Melted Snowman", "Suprisingly Flavorful", `<img src="Images/snowman.png" alt="img">`,"$67"),
+        drink4 = new menuItem("Frostbite Tonic", "Numbs your lips after each sip", `<img src="Images/tonic.png" alt="img">`,"$67"),
+    ]
+
+
+    function appendsnowCones() {
+        let coneContainer = document.getElementById("coneContainer");
+        if (!coneContainer) return;
+        for(let i = 0; i < snowcones.length; i++) {
+            let item = snowcones[i];
+            coneContainer.innerHTML += item.toHTML();
+        }
     }
-}
 
-
-let snowcones = [
-    item1 = new menuItem("Salisbury Steak", "Cooked to your liking", `<img src="Images/steak.png" alt="img">`,"$67"),
-    item2 = new menuItem("Clear Flavor #7", "We refuse to explain.", `<img src="Images/clear.png" alt="img">`,"$67"),
-    item3 = new menuItem("Vanilla Ice", "Robert Matthew Van Winkle", `<img src="Images/vanilla.png" alt="img">`,"$67"),
-    item4 = new menuItem("Pickle Party", "Brine Forward.", `<img src="Images/pickle.png" alt="img">`,"$67"),
-    item5 = new menuItem("Screaming Into the Void", "Absolutely no sweetness. Only echo.", `<img src="Images/void.png" alt="img">`,"$67"),
-    item6 = new menuItem("Pool Water", "Just a hint of Chlorine", `<img src="Images/pool.png" alt="img">`,"$67"),
-    item7 = new menuItem("404: Flavor Not Found", "Leaves the taste of error on your tongue", `<img src="Images/404.png" alt="img">`,"$67"),
-    item8 = new menuItem("Red 40", "Self Explanitory", `<img src="Images/red.png" alt="img">`,"$67"),
-    item9 = new menuItem("Cactus Melon", "Sweet, prickly, and strangely energizing.", `<img src="Images/cactus.png" alt="img">`,"$67"),
-    item10 = new menuItem("Radioactive Banana", "glows just a little too brightly", `<img src="Images/banana.png" alt="img">`,"$67"),
-    item11 = new menuItem("Microplastics", "Served with a tiny biodegradable spoon", `<img src="Images/plastic.png" alt="img">`,"$67"),
-    item12 = new menuItem("Electric Cumcumber",'faint aftertaste of "why is this carbonated?"', `<img src="Images/cucumber.png" alt="img">`,"$67"),
-]
-
-let sides = [
-    side1 = new menuItem("Icy Spicy Nachos", "We don't know how we did it either", `<img src="Images/nachos.png" alt="img">`,"$67"),
-    side2 = new menuItem("Frozen Mozzerella Snowballs", "Cheese that looks like Snowballs", `<img src="Images/motzballs.png" alt="img">`,"$67"),
-    side3 = new menuItem("Freezer-Burned Garlic Bread", "Edges burned and Icy", `<img src="Images/bread.png" alt="img">`,"$67"),
-    side4 = new menuItem("Ice-Lattice Onion Rings", "Crunchy in all the Wrong Ways", `<img src="Images/rings.png" alt="img">`,"$67")
-]
-
-let drinks = [
-    drink1 = new menuItem("Frozen Hot Coco", "Deliciously Confusing", `<img src="Images/hot-coco.png" alt="img">`,"$67"),
-    drink2 = new menuItem("Water", "But as a solid", `<img src="Images/water.png" alt="img">`,"$67"),
-    drink3 = new menuItem("Melted Snowman", "Suprisingly Flavorful", `<img src="Images/snowman.png" alt="img">`,"$67"),
-    drink4 = new menuItem("Frostbite Tonic", "Numbs your lips after each sip", `<img src="Images/tonic.png" alt="img">`,"$67"),
-]
-
-
-function appendSnowCones() {
-    let coneContainer = document.getElementById("coneContainer");
-
-    for(let i = 0; i < snowcones.length; i++) {
-        let item = snowcones[i];
-        coneContainer.innerHTML += item.toHTML();
+    function appendSides() {
+        let sidesContainer = document.getElementById("sidesContainer");
+        if (!sidesContainer) return;
+        for(let i = 0; i < sides.length; i++) {
+            let side = sides[i];
+            sidesContainer.innerHTML += side.toHTML();
+        }
     }
-}
 
-function appendSides() {
-    let sidesContainer = document.getElementById("sidesContainer");
-    for(let i = 0; i < sides.length; i++) {
-        let side = sides[i];
-        sidesContainer.innerHTML += side.toHTML();
+    function appendDrinks() {
+        let drinksContainer = document.getElementById("drinksContainer");
+        if (!drinksContainer) return;
+        for(let i = 0; i < drinks.length; i++) {
+            let drink = drinks[i];
+            drinksContainer.innerHTML += drink.toHTML();
+        }
     }
+  
 }
-
-function appendDrinks() {
-    let drinksContainer = document.getElementById("drinksContainer");
-    for(let i = 0; i < drinks.length; i++) {
-        let drink = drinks[i];
-        drinksContainer.innerHTML += drink.toHTML();
-    }
-}
-
 appendSnowCones();
 appendSides();
 appendDrinks();
@@ -252,3 +379,10 @@ cartBtn.addEventListener("click", () => {
     }
 })
 
+
+}
+      
+    }
+  
+  
+  
