@@ -10,23 +10,16 @@ function nav() {
 }
 
 // responsive desk nav
-
 window.addEventListener('scroll', function() {
     let scrollThreshold = 200;
-    let tabNav = this.document.getElementById("tab-nav")
     let deskNav = this.document.getElementById("desk-nav")
     if (window.scrollY > scrollThreshold) {
-        tabNav.style.backdropFilter = "blur(10px)" 
         deskNav.style.backdropFilter = "blur(10px)" 
-        tabNav.style.opacity = "0.7"
         deskNav.style.opacity = "0.7"
         deskNav.style.padding = "20px 0"
         deskNav.style.top = "0"
-        tabNav.style.top = "0"
     } else {
-        tabNav.style.backdropFilter = "none" 
         deskNav.style.backdropFilter = "none" 
-        tabNav.style.opacity = "1"
         deskNav.style.opacity = "1"
         deskNav.style.padding = "0"
     }
@@ -218,7 +211,7 @@ let drinks = [
 ]
 
 
-function appendsnowCones() {
+function appendSnowCones() {
     let coneContainer = document.getElementById("coneContainer");
 
     for(let i = 0; i < snowcones.length; i++) {
@@ -243,6 +236,19 @@ function appendDrinks() {
     }
 }
 
-appendsnowCones();
+appendSnowCones();
 appendSides();
 appendDrinks();
+
+
+// cart hamburger
+let cartBtn = document.getElementById("cart-icon")
+let cartContainer = document.getElementById("cart-container")
+cartBtn.addEventListener("click", () => {
+    if(cartContainer.style.right === "-383px") {
+        cartContainer.style.right = "0px"
+    } else {
+        cartContainer.style.right = "-383px"
+    }
+})
+
