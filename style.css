@@ -30,6 +30,10 @@
 
 /* style rules for body */
 
+body {
+    overflow-x: hidden;
+}
+
 body button{
     cursor: pointer;
 }
@@ -76,9 +80,10 @@ header img{
 /* style rules for nav */
 nav {
     font-family: "Metal Mania", serif;
+    z-index: 9999;
 }
 
-.desk-nav, .tab-nav {
+.desk-nav {
     display: none;
 }
 
@@ -151,6 +156,8 @@ nav {
 main {
     padding: 0 12%;
     background: linear-gradient(90deg, #ABDEE1,#77B0BF, #ABDEE1);
+    position: relative;
+    top: -100px;
 }
 
 .hero {
@@ -383,6 +390,37 @@ h1, h2 {
 }
 
 /* Style Rules For Main */
+.cart-grid {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: -383px;
+}
+
+.cart-icon {
+    display: block;
+    width: 100px;
+    height: 60px;
+    padding: 10px 0;
+    background-color: #F9FBFC;
+    border-radius: 0 0 0 20px;
+    border-bottom: 2px solid #000 ;
+    border-left: 2px solid #000 ;
+    cursor: pointer;
+    transition-duration: 0.3s
+}
+
+.cart-container {
+    right: -383px;
+    width: 383px;
+    background-color: #F9FBFC;
+    border-radius: 0 0 0 20px;
+    transition: .5s;
+}
+
+#cart-container {
+    transition-duration: .5s;
+}
 
 div.slider-container {
     display: flex;
@@ -489,12 +527,12 @@ textarea {
 #coneContainer, #sidesContainer, #drinksContainer {
     display: flex;
     justify-content: space-evenly;
-    overflow-x: scroll;
     max-width: 100%;
     margin: 0 auto;
     border: 4px dashed #F9FBFC;
     padding: 20px;
     border-radius: 20px;
+    overflow-x: scroll;
 }
 
 #coneContainer::-webkit-scrollbar, #sidesContainer::-webkit-scrollbar, #drinksContainer::-webkit-scrollbar {
@@ -570,54 +608,58 @@ footer h2 {
 /* tablet */
 @media screen and (min-width: 550px) {
     /* nav */
-    .mobile-nav, #desk-nav {
-        display: none;
-    }
-
-    #tab-nav {
-        display: block;
+    #desk-nav{
+        display: flex;
         position: sticky;
         background-color: #F9FBFC;
-        transition-duration: 0.3s;
+        transition-duration: 0.5s;
         font-family: "Quintessential", serif;
+        max-width: 100%;
     }
 
-    .tab-nav a{
+    nav a{
         text-decoration: none;
         color: black;
         font-size: 25px;
         opacity: 1.5;
-        transition: font-weight 0.3s ease-in-out;
     }
 
-    .tab-nav a :hover{
+    nav a:hover{
         text-decoration: underline;
         font-weight: bold;
     }
 
-    .tab-nav img{
+    nav img{
         width: 80px;
         max-width: 100%;
-        margin-right: 30px;
     }
 
-    .tab-links{
+    .links{
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         position: relative;
         margin-left: 60px;
+    }
+
+    .links a {
+        margin: 0 30px;
+    }
+
+    .profile-img{
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+
+    .mobile-nav {
+        display: none;
+    }
+
+    .desk-nav{
+        display: flex;
+        justify-content: space-between;
         align-items: center;
     }
 
-    .tab-links button {
-        margin-top: 20px;
-        width: 100px;
-        height: 60px;
-        border: 2px solid black;
-        border-radius: 50px;
-        background-color: #ABDEE1;
-        margin-bottom: 20px;
-    }
 
     /* signup/login */
     .login, .signUp{
@@ -645,6 +687,7 @@ footer h2 {
     /* main */
     main {
         padding: 0 16%;
+        position: static;
     }
 
     h1, h2 {
@@ -694,56 +737,9 @@ footer h2 {
 
 /* desktop */
 @media screen and (min-width: 1050px) {
-
-    #desk-nav{
-        display: flex;
-        position: sticky;
-        background-color: #F9FBFC;
-        transition-duration: 0.3s;
-        font-family: "Quintessential", serif;
-        max-width: 100%;
-    }
-
-    nav a{
-        text-decoration: none;
-        color: black;
-        font-size: 25px;
-        opacity: 1.5;
-    }
-
-    nav a:hover{
-        text-decoration: underline;
-        font-weight: bold;
-    }
-
-    nav img{
-        width: 80px;
-        max-width: 100%;
-    }
-
-    .links{
-        display: flex;
-        justify-content: space-evenly;
-        position: relative;
-        margin-left: 60px;
-    }
-
+    /* nav */
     .links a{
         margin: 0 100px;
-    }
-
-    .profile-img{
-        margin-top: 5px;
-    }
-
-    .mobile-nav, #tab-nav {
-        display: none;
-    }
-
-    .desk-nav{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
     }
 
     /* main */

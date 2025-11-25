@@ -10,23 +10,16 @@ function nav() {
 }
 
 // responsive desk nav
-
 window.addEventListener('scroll', function() {
     let scrollThreshold = 200;
-    let tabNav = this.document.getElementById("tab-nav")
     let deskNav = this.document.getElementById("desk-nav")
     if (window.scrollY > scrollThreshold) {
-        tabNav.style.backdropFilter = "blur(10px)" 
         deskNav.style.backdropFilter = "blur(10px)" 
-        tabNav.style.opacity = "0.7"
         deskNav.style.opacity = "0.7"
         deskNav.style.padding = "20px 0"
         deskNav.style.top = "0"
-        tabNav.style.top = "0"
     } else {
-        tabNav.style.backdropFilter = "none" 
         deskNav.style.backdropFilter = "none" 
-        tabNav.style.opacity = "1"
         deskNav.style.opacity = "1"
         deskNav.style.padding = "0"
     }
@@ -311,10 +304,8 @@ window.onload = () => {
                 </div>
             `;
         }
-    }
-
-
-    let snowcones = [
+      
+      let snowcones = [
         item1 = new menuItem("Salisbury Steak", "Cooked to your liking", `<img src="Images/steak.png" alt="img">`,"$67"),
         item2 = new menuItem("Clear Flavor #7", "We refuse to explain.", `<img src="Images/clear.png" alt="img">`,"$67"),
         item3 = new menuItem("Vanilla Ice", "Robert Matthew Van Winkle", `<img src="Images/vanilla.png" alt="img">`,"$67"),
@@ -370,15 +361,28 @@ window.onload = () => {
             drinksContainer.innerHTML += drink.toHTML();
         }
     }
+  
+}
+appendSnowCones();
+appendSides();
+appendDrinks();
 
-    appendsnowCones();
-    appendSides();
-    appendDrinks();
+
+// cart hamburger
+let cartBtn = document.getElementById("cart-icon")
+let cartContainer = document.getElementById("cart-container")
+cartBtn.addEventListener("click", () => {
+    if(cartContainer.style.right === "-383px") {
+        cartContainer.style.right = "0px"
+    } else {
+        cartContainer.style.right = "-383px"
+    }
+})
 
 
 }
-
-
-
-// menu
-
+      
+    }
+  
+  
+  
