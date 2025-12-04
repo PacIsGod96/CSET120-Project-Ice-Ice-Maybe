@@ -295,7 +295,19 @@ h1, h2 {
     justify-content: space-evenly;
     margin: 20px 0 20px 0;
 }
-
+.profile-guest{
+    width: 100%;
+    text-align: center;
+    padding: 300px 0 300px 0;
+}
+.profile-guest-login-btn{
+    width: 350px;
+    height: 100px;
+    border: 2px solid black;
+    border-radius: 50px;
+    background-color: #ABDEE1;
+    font-size: 20px;
+}
 /*Log In/Sign Up*/
 #modal{
     display: none;

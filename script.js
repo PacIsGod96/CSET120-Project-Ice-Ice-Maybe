@@ -88,7 +88,7 @@ window.onload = () => {
         loginSignUpBtn.forEach(btn => {
             btn.style.display = "none"
         })
-        
+
     }else{
         loginSignUpBtn.forEach(btn => {
             btn.style.display = "flex"
@@ -111,6 +111,22 @@ window.onload = () => {
     }
     let customer = false 
     let manager = false 
+
+    let profileMap = {
+            "firstname": "profile-firstName",
+            "lastName": "profile-lastName",
+            "username": "profile-username",
+            "password": "profile-password",
+            "email": "profile-email",
+            "address": "profile-address",
+            "city": "profile-city",
+            "zipCode": "profile-zipCode",
+            "firstName-card": "profile-firstName-card",
+            "middleInitial": "profile-middleInitial-card",
+            "lastName-card": "profile-lastName-card",
+            "cardNumber": "profile-cardNumber",
+            "cvv": "profile-cvv"
+    }
 
     loginSignUpBtn.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -172,6 +188,7 @@ window.onload = () => {
             }
         })
         loginInputCheck()
+        console.log("users array:", users)
     }
     //function to check and see if all the inputs were filled 
     function inputCheck(){
@@ -306,6 +323,7 @@ window.onload = () => {
     let profileXBtn = document.querySelectorAll(".profile-panel .xIcon-Btn")
     let logoutBtn = document.querySelectorAll(".profile-logout-btn")
     let deleteAccountBtn = document.querySelectorAll(".profile-delete-account-btn")
+    let changeBtn = document.querySelectorAll(".profile-change-info-btn")
 
     function loadProfileInfo(){
         let currentUser = localStorage.getItem("currentUser")
@@ -314,22 +332,6 @@ window.onload = () => {
         let users = JSON.parse(localStorage.getItem("users")) || []
         let foundUser = users.find(u => u.username == currentUser)
         if(!foundUser)return
-
-        let profileMap = {
-            "firstname": "profile-firstName",
-            "lastName": "profile-lastName",
-            "username": "profile-username",
-            "password": "profile-password",
-            "email": "profile-email",
-            "address": "profile-address",
-            "city": "profile-city",
-            "zipCode": "profile-zipCode",
-            "firstName-card": "profile-firstName-card",
-            "middleInitial": "profile-middleInitial-card",
-            "lastName-card": "profile-lastName-card",
-            "cardNumber": "profile-cardNumber",
-            "cvv": "profile-cvv"
-        }
 
         for(let key in profileMap){
             let inputId = profileMap[key]
@@ -354,17 +356,45 @@ window.onload = () => {
         })
     })
     
-    if(profileBtns){
-        profileBtns.forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                e.preventDefault()
-                profileContainer.style.display = "flex"
-                profilePanel.classList.add("active")
-                document.body.style.position = "fixed"
-                loadProfileInfo()
+    profileBtns.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault()
+
+
+            document.querySelector(".profile-container").style.display = "flex"
+            document.querySelector(".profile-panel").classList.add("active")
+            document.body.style.position = "fixed"
+
+            let profileScroll= profilePanel.querySelectorAll(".profile-content-scroll")
+            profileScroll.forEach(container => {
+                container.scrollTop = 0
             })
+
+            let loggedIn = localStorage.getItem("loggedIn") == "true"
+            let guestDiv = document.querySelector(".profile-guest")
+            let loggedInDiv = document.querySelector(".profile-logged-in")
+
+            if(!loggedIn){
+                guestDiv.style.display = "block"
+                loggedInDiv.style.display = "none"
+            }else{
+                guestDiv.style.display = "none"
+                loggedInDiv.style.display = "block"
+                loadProfileInfo()
+            }
         })
-    }
+    })
+
+    document.addEventListener("click", (e) => {
+        if(e.target.classList.contains("profile-guest-login-btn")) {
+            document.querySelector(".profile-container").style.display = "none"
+            document.querySelector(".profile-panel").classList.remove("active")
+
+            modal.style.display = "flex"
+            loginPanel.classList.add("active")
+            document.body.style.position = "fixed"
+        }
+    })
 
     if(logoutBtn){
         logoutBtn.forEach( btn => {
@@ -379,13 +409,48 @@ window.onload = () => {
         })
     }
 
-    if(deleteAccountBtn){
-        deleteAccountBtn.forEach(btn => {
-            btn.addEventListener("click", (e) => {
 
-            })
+    deleteAccountBtn.forEach(btn => {
+        btn.addEventListener("click", () => {
+            let currentUser = localStorage.getItem("currentUser")
+            if(!currentUser)return
+
+            users = users.filter(u => u.username.trim().toLowerCase() !== currentUser.trim().toLowerCase())
+            localStorage.setItem("users", JSON.stringify(users))
+
+            localStorage.removeItem("currentUser")
+            localStorage.setItem("loggedIn", "false")
+
+            closeProfile()
+
+            loginSignUpBtn.forEach(btn => btn.style.display = "flex")
+
+            let profileInputs = profilePanel.querySelectorAll("input")
+            profileInputs.forEach(input => input.value = "")
+
         })
-    }
+    })
+
+    changeBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault()
+
+            let currentUser = localStorage.getItem("currentUser")
+            if(!currentUser) return
+
+            let users = JSON.parse(localStorage.getItem("users")) || []
+            let updatedUser = users.find(u => u.username == currentUser)
+            if(!updatedUser) return
+
+            for(let key in profileMap){
+                let input = profilePanel.querySelector(`#${profileMap[key]}`)
+                if(input) updatedUser[key] = input.value.trim()
+            }
+
+            localStorage.setItem("users", JSON.stringify(users))
+        })
+    })
+
 
 
 
