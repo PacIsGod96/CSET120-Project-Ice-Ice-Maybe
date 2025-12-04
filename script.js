@@ -64,25 +64,36 @@ if (reviewForm) {
 
 
 //Sign In/Sign Up
-function passwordToggle(id, link){
-    let input = document.getElementById(id)
-    if(input.type == `password`){
-        input.type = `text`
-        link.textContent = `Hide Password`
-    }else{
-        input.type = `password`
-        link.textContent = `Show Password`
-    }
-}
+let toggleLinks = document.querySelectorAll(".password-toggle")
+
+toggleLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault()
+        let targetId = this.dataset.target
+        let input = document.getElementById(targetId)
+
+        if(input.type == "password"){
+            input.type = "text"
+            this.textContent = "Hide Password"
+        }else{
+            input.type = "password"
+            this.textContent = "Show Password"
+        }
+    })
+})
 window.onload = () => {
-    if(localStorage.getItem("loggedIn") == "true"){
-        let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
+    let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
+    let loggedIn = localStorage.getItem("loggedIn")
+    if(loggedIn == "true"){
         loginSignUpBtn.forEach(btn => {
             btn.style.display = "none"
         })
+        
+    }else{
+        loginSignUpBtn.forEach(btn => {
+            btn.style.display = "flex"
+        })
     }
-    let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn")
-    let modal = document.getElementById("modal")
     let xBtns = document.querySelectorAll(".xIcon-Btn")
     let loginPanel = document.querySelector(".login")
     let signUpPanel = document.querySelector(".signUp")
@@ -267,13 +278,10 @@ window.onload = () => {
 
             if(found){
                 localStorage.setItem("loggedIn", "true")
+                localStorage.setItem("currentUser", loginUsername)
                 closeModal()
-                for(let i = 0; i < loginInputs.length; i++){
-                    loginInputs[i].value = ""
-                }
-                for(let j = 0; j < loginSignUpBtn.length; j++){
-                    loginSignUpBtn[j].style.display = "none"
-                }
+                loginInputs.forEach(input => input.value = "")
+                loginSignUpBtn.forEach(btn => btn.style.display = "none")
             }else{
                 for(let i = 0; i < loginInputs.length; i++){
                     loginInputs[i].value = ""
@@ -282,6 +290,8 @@ window.onload = () => {
             }
         })
 
+        
+
         function closeModal(){
             modal.style.display = "none"
             loginPanel.classList.remove("active")
@@ -289,6 +299,95 @@ window.onload = () => {
             document.body.style.position = "static"
         }
     }
+
+    let profileBtns = document.querySelectorAll("#open-profile")
+    let profileContainer = document.querySelector(".profile-container")
+    let profilePanel = document.querySelector(".profile-panel")
+    let profileXBtn = document.querySelectorAll(".profile-panel .xIcon-Btn")
+    let logoutBtn = document.querySelectorAll(".profile-logout-btn")
+    let deleteAccountBtn = document.querySelectorAll(".profile-delete-account-btn")
+
+    function loadProfileInfo(){
+        let currentUser = localStorage.getItem("currentUser")
+        if(!currentUser) return
+
+        let users = JSON.parse(localStorage.getItem("users")) || []
+        let foundUser = users.find(u => u.username == currentUser)
+        if(!foundUser)return
+
+        let profileMap = {
+            "firstname": "profile-firstName",
+            "lastName": "profile-lastName",
+            "username": "profile-username",
+            "password": "profile-password",
+            "email": "profile-email",
+            "address": "profile-address",
+            "city": "profile-city",
+            "zipCode": "profile-zipCode",
+            "firstName-card": "profile-firstName-card",
+            "middleInitial": "profile-middleInitial-card",
+            "lastName-card": "profile-lastName-card",
+            "cardNumber": "profile-cardNumber",
+            "cvv": "profile-cvv"
+        }
+
+        for(let key in profileMap){
+            let inputId = profileMap[key]
+            let input = document.getElementById(inputId)
+            if(input) input.value = foundUser[key] || ""
+        }
+
+    }
+
+    function closeProfile(){
+        profilePanel.classList.remove("active")
+        profileContainer.style.display = "none"
+        document.body.style.position = "static"
+
+        let profileInputs = profilePanel.querySelectorAll("input")
+        profileInputs.forEach(input => input.value = "")
+    }
+
+    profileXBtn.forEach(btn => {
+        btn.addEventListener("click",() => {
+            closeProfile()
+        })
+    })
+    
+    if(profileBtns){
+        profileBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault()
+                profileContainer.style.display = "flex"
+                profilePanel.classList.add("active")
+                document.body.style.position = "fixed"
+                loadProfileInfo()
+            })
+        })
+    }
+
+    if(logoutBtn){
+        logoutBtn.forEach( btn => {
+            btn.addEventListener("click", (e) => {
+                localStorage.setItem("loggedIn", "false")
+                localStorage.removeItem("currentUser")
+                loginSignUpBtn.forEach(btn => {
+                    btn.style.display = "flex"
+                })
+                closeProfile()
+            })
+        })
+    }
+
+    if(deleteAccountBtn){
+        deleteAccountBtn.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+
+            })
+        })
+    }
+
+
 
     class menuItem {
         constructor(name, desc, img, price) {
@@ -377,8 +476,3 @@ window.onload = () => {
 
 
 }
-
-
-
-// menu
-

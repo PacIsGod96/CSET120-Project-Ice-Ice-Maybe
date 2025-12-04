@@ -23,8 +23,8 @@
             <a href="index.html" class="index-link">Home</a>
             <a href="menu.html">Menu</a>
             <a href="reviews.html">Reviews</a>
-            <a class="login-SignUp-Btn">Login/Sign Up</a>
-            <a href=""><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
+            <button class="login-SignUp-Btn">Login/Sign Up</button>
+            <a href="#" id="open-profile"><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
         </div>
     </nav>
     <nav class="tab-nav" id="tab-nav">
@@ -33,7 +33,7 @@
             <a href="menu.html">Menu</a>
             <a href="reviews.html">Reviews</a>
             <button class="login-SignUp-Btn">Login/Sign Up</button>
-            <a href=""><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
+            <a href="#" id="open-profile"><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
         </div>
     </nav>
     <nav class="desk-nav" id="desk-nav">
@@ -51,11 +51,103 @@
         <div>
             <div class="profile-img">
                 <button class="login-SignUp-Btn">Login/Sign Up</button>
-                <a href=""><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
+                <a href="#" id="open-profile"><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
             </div>
         </div>
     </nav>
     <main>
+        <div class="profile-container">
+            <div class="profile-panel">
+                <div class="profile-content">
+                    <div class="xIcon">
+                        <img class="xIcon-Btn" src="Images/x_icon_174151.png" alt="">
+                    </div>
+                    <div class="profile-label">
+                        <h1>Profile</h1>
+                    </div>
+                    <div class="profile-content-scroll">
+                        <div class="profile-general-info profile-align">
+                            <h3>General Info</h3>
+                            <div class="profile-general-names">
+                                <div class="input">
+                                    <label for="firstName">First</label>
+                                    <input type="text" id="profile-firstName" placeholder="first Name">
+                                </div>
+                                <div class="input">
+                                    <label for="lastName">Last</label>
+                                    <input type="text" id="profile-lastName" placeholder="last name">
+                                </div>
+                            </div>
+                            <div class="profile-general-other">
+                                <div class="input">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="profile-username" placeholder="username">
+                                </div>
+                                <div class="input">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="profile-password" placeholder="password">
+                                    <a href="#" class="password-toggle" data-target="profile-password">Show Password</a>
+                                </div>
+                                <div class="input">
+                                    <label for="email">Email</label>
+                                    <input type="text" id="profile-email" placeholder="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-location profile-align">
+                            <h3>Location</h3>
+                            <div class="profile-location-info">
+                                <div class="input">
+                                    <label for="address">Address</label>
+                                    <input type="text" id="profile-address" placeholder="address">
+                                </div>
+                                <div class="input">
+                                    <label for="city">City</label>
+                                    <input type="text" id="profile-city" placeholder="city">
+                                </div>
+                                <div class="input">
+                                    <label for="ZipCode">Zip Code</label>
+                                    <input type="text" id="profile-zipCode" placeholder="zip code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-card-info profile-align">
+                            <h3>Card Info</h3>
+                            <div class="profile-card-info-name">
+                                <div class="input">
+                                    <label for="firstNameOnCard">First</label>
+                                    <input type="text" id="profile-firstName-card" placeholder="first name">
+                                </div>
+                                <div class="input">
+                                    <label for="middleInitialOnCard">MI</label>
+                                    <input type="text" id="profile-middleInitial-card" placeholder="MI">
+                                </div>
+                                <div class="input">
+                                    <label for="lastNameOnCard">Last</label>
+                                    <input type="text" id="profile-lastName-card" placeholder="last name">
+                                </div>
+                            </div>
+                            <div class="profile-card-info-other">
+                                <div class="input">
+                                    <label for="CardNumber">Card Number</label>
+                                    <input type="text" id="profile-cardNumber" placeholder="number">
+                                </div>
+                                <div class="input">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="profile-cvv" placeholder="CVV">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profilebtns">
+                            <button class="profile-logout-btn">Logout</button>
+                            <button class="profile-delete-account-btn">Delete Account</button>
+                            <button class="profile-mna-btn">Make New Account</button>
+                            <button class="profile-change-info-btn">Change</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="modal">
             <div class="container">
             <div class="signUp switch">
@@ -80,12 +172,12 @@
                     </div>
                     <div class="input">
                         <label for="username">Username</label>
-                        <input type="text" id="signUp-username" placeholder="username">
+                        <input type="text" id="username" placeholder="username">
                     </div>
                     <div class="input">
                         <label for="password">Password</label>
-                        <input type="password" id="signUp-password" placeholder="password">
-                        <a href="#" onclick="passwordToggle('signUp-password', this)">Show Password</a>
+                        <input type="password" id="password" placeholder="password">
+                        <a href="#" class="password-toggle" data-target="password">Show Password</a>
                     </div>
                     <div class="input">
                         <label for="email">Email</label>
@@ -150,7 +242,7 @@
                 <div class="input">
                     <label for="password">Password</label>
                     <input type="password" id="login-password" placeholder="password">
-                    <a href="#" onclick="passwordToggle('login-password', this)">Show Password</a>
+                    <a href="#" class="password-toggle" data-target="login-password">Show Password</a>
                 </div>
                 <button class="loginBtn containerBtn">Log In</button>
                 <a href="#" id="goToSignUp">Sign Up?</a>
