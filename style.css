@@ -474,6 +474,12 @@ div.slider-container {
     margin-left: 10px;
 }
 
+.item-message {
+    margin-top: 30px;
+    height: 20px; 
+    margin-bottom: -40px;
+}
+
 .quantity {
     width: 30px;
     border: 1px solid #000;
@@ -484,6 +490,7 @@ div.slider-container {
     justify-content: center;
     padding: 20px 10px;
     margin: 30px auto;
+    width: 100px;
     background-color: #ABDEE1;
     border: 2px solid #000;
     border-radius: 20px;

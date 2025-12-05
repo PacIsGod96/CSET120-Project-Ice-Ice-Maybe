@@ -156,6 +156,13 @@ document.addEventListener("DOMContentLoaded", () =>{
 })
 
 // menu
+function loadCart() {
+    let saved = localStorage.getItem("cart");
+    if (saved) {
+        cart = JSON.parse(saved);
+        updateCart();
+    }
+}
 
 class menuItem {
     constructor(name, desc, img, price) {
@@ -175,6 +182,7 @@ class menuItem {
                     <p class="price">$${this.price.toFixed(2)}</p>
                     <button class="cart-btn" onclick="addToCart('${this.name}', ${this.price})"">Add To Cart</button>
                 </div>
+                <p id="msg-${this.name.replace(/\s+/g, '')}" class="item-message"></p>
             </div>
         `;
     }
@@ -244,47 +252,61 @@ let cart = [];
 function addToCart(name, price) {
     // Find item in cart
     let existing = cart.find(item => item.name === name);
-
     if (existing) {
         existing.quantity++;
     } else {
         cart.push({ name, price, quantity: 1 });
     }
-
+    showItemMessage(name);
+    localStorage.setItem("cart", JSON.stringify(cart));
     updateCart();
+}
+
+function showItemMessage(name) {
+    let id = "msg-" + name.replace(/\s+/g, '');
+    let p = document.getElementById(id);
+    p.textContent = `Added to cart!`;
+}
+
+function removeMessage(name) {
+    let id = "msg-" + name.replace(/\s+/g, '');
+    let p = document.getElementById(id);
+    p.textContent = '';
 }
 
 function updateCart() {
     let itemContainer = document.getElementById("currentCart");
     let total = 0;
 
-    // clear previous items
-    itemContainer.innerHTML = "";
-     cart.forEach((item, index) => {
-        let subtotal = item.price * item.quantity;
-        total += subtotal;
+    if (itemContainer) {
+        itemContainer.innerHTML = "";
+        cart.forEach((item, index) => {
+            let subtotal = item.price * item.quantity;
+            total += subtotal;
 
-        itemContainer.innerHTML += `
-            <div class="top-space item">
-                <div class="cart-item">
-                    <h1>${item.name}</h1>
-                    <p>Price: <br>$${item.price.toFixed(2)}</p>
+            itemContainer.innerHTML += `
+                <div class="top-space item">
+                    <div class="cart-item">
+                        <h1>${item.name}</h1>
+                        <p>Price: <br>$${item.price.toFixed(2)}</p>
 
-                    <label>Qty: 
-                        <input type="number" value="${item.quantity}" min="1" max="10" 
-                            class="quantity" onchange="changeQuantity(${index}, this.value)">
-                    </label>
+                        <label>Qty: 
+                            <input type="number" value="${item.quantity}" min="1" max="10" 
+                                class="quantity" onchange="changeQuantity(${index}, this.value)">
+                        </label>
+                    </div>
+                    <button onclick="removeItem('${item.name}', ${item.price})">Remove</button>
+                    <p class="subtotal">Subtotal: $${subtotal.toFixed(2)}</p>
                 </div>
-                <button onclick="removeItem('${item.name}', ${item.price})">Remove</button>
-                <p class="subtotal">Subtotal: $${subtotal.toFixed(2)}</p>
-            </div>
-        `;
-    });
+            `;
+        });
     
-    itemContainer.innerHTML += `
-        <h2 class="center-txt">Total: $${total.toFixed(2)}</h2>
-        <button class="confirm">Confirm Order</button>
-    `;
+        itemContainer.innerHTML += `
+            <h2 class="center-txt">Total: $${total.toFixed(2)}</h2>
+            <a class="confirm" href="order.html">Confirm Order</a>
+        `;
+    }
+
 }
 
 function changeQuantity(index, newQty) {
@@ -294,6 +316,7 @@ function changeQuantity(index, newQty) {
 
 function removeItem(name, price) {
     cart = cart.filter(item => !(item.name === name && item.price === price));
+    removeMessage(name);
     updateCart();
 }
 
@@ -307,4 +330,6 @@ cartBtn.addEventListener("click", () => {
         cartContainer.style.right = "-383px"
     }
 })
+
+loadCart();
 
