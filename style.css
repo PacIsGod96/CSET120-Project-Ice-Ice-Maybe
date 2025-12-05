@@ -414,8 +414,9 @@ h1, h2 {
     right: -383px;
     width: 383px;
     background-color: #F9FBFC;
-    border-radius: 0 0 0 20px;
     transition: .5s;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
 }
 
 #cart-container {
@@ -433,6 +434,66 @@ div.slider-container {
     margin-top: 40px;
     text-align: center;
     text-indent: none;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 60% 30% 10%;
+}
+
+.cart-title-grid {
+    display: grid;
+    grid-template-columns: 58.5% 21.5% 20%;
+    margin-left: 10px;
+}
+
+.subtotal {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.item button {
+    display: flex;
+    justify-content: center;
+    background-color: #F9FBFC;
+    text-decoration: underline;
+    transition-duration: 0.3s;
+    font-size: 1.05em;
+    text-indent: 10px;
+}
+
+.item button:hover {
+    font-weight: bold;
+    transition-duration: 0.3s;
+}
+
+.cart-item h1 {
+    font-family: "Funnel Sans", sans-serif;
+    color: #000;
+    font-size: 1.5em;
+    margin-left: 10px;
+}
+
+.quantity {
+    width: 30px;
+    border: 1px solid #000;
+}
+
+.confirm {
+    display: flex;
+    justify-content: center;
+    padding: 20px 10px;
+    margin: 30px auto;
+    background-color: #ABDEE1;
+    border: 2px solid #000;
+    border-radius: 20px;
+    transition-duration: 0.3s;
+    font-size: 0.9em;
+}
+
+.confirm:hover {
+    font-weight: bold;
+    transition-duration: 0.3s;
 }
 
 div.slider-container p {
