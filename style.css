@@ -474,6 +474,12 @@ div.slider-container {
     margin-left: 10px;
 }
 
+.item-message {
+    margin-top: 30px;
+    height: 20px; 
+    margin-bottom: -40px;
+}
+
 .quantity {
     width: 30px;
     border: 1px solid #000;
@@ -484,6 +490,7 @@ div.slider-container {
     justify-content: center;
     padding: 20px 10px;
     margin: 30px auto;
+    width: 100px;
     background-color: #ABDEE1;
     border: 2px solid #000;
     border-radius: 20px;
@@ -582,6 +589,61 @@ textarea {
     margin-bottom: 50px;
     padding: 20px;
     text-align: center;
+}
+
+.order-btn-grid {
+    display: flex;
+    justify-content: space-around;
+}
+
+.order-btn-grid button {
+    margin: 20px;
+    padding: 20px 30px;
+    border-radius: 20px;
+    background-color: #fff;
+    border: 2px solid #000;
+    transition-duration: 0.3s;
+    font-size: 1.1em;
+}
+
+.order-btn-grid button:hover {
+    background-color: lightgray;
+    transition-duration: 0.3s;
+}
+
+#delivery-container, #pickup-container, #pay-container {
+    display: none;
+}
+
+#order-submit {
+    display: none;
+    margin: 30px auto;
+    padding: 20px 30px;
+    border-radius: 20px;
+    border: 2px solid #000;
+    background-color: #fff;
+    font-size: 0.9em;
+}
+
+#order-msg {
+    display: none;
+}
+
+.order-form {
+    display: block;
+    border: 4px dashed #f9f9f9;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#delivery-container input, #pay-container input {
+    display: block;
+    margin: 10px auto;
+
+}
+
+.name-grid, .card-grid {
+    display: block;
 }
 
 /* menu */
@@ -817,5 +879,20 @@ footer h2 {
 
     .hero {
         margin-left: 0;
-    }    
+    }
+    
+    .order-form {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+
+    #delivery-container input, #pay-container input {
+        display: block;
+        margin: 10px auto;
+    }  
+
+    .name-grid, .card-grid {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
 }

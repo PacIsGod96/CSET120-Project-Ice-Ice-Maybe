@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ice, Ice, Maybe :: Confirm Order</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Images/icon.png">
+    <!--fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Metal+Mania&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img class="logo" src="Images/logo-transparent.png" alt="logo">
+    </header>
+    <nav class="mobile-nav">
+        <a class="menu-icon" onclick="nav()">
+            <div> &#9776; </div>
+        </a>
+        <div id="menu-links">
+            <a href="index.html" class="index-link">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="reviews.html">Reviews</a>
+        </div>
+    </nav>
+    <nav class="desk-nav" id="desk-nav">
+        <div class="links">
+            <div>
+                <a href="index.html">Home</a>
+            </div>
+            <div>
+                <a href="menu.html">Menu</a>
+            </div>
+            <div>
+                <a href="reviews.html">Reviews</a>
+            </div>
+        </div>
+        <div>
+            <div class="profile-img">
+                <a href=""><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <h1 class="top-space center-txt">Review And Pay:</h1>
+        <div class="order-btn-grid">
+            <button id="pickup">Pickup</button>
+            <button id="delivery">Delivery</button>
+        </div>
+        <form>
+            <div class="order-form">
+                <div id="pickup-container" class="bottom-space center-txt">
+                    <h2>Pickup Info</h2>
+                    <label for="time">What time do you want to pickup your order?</label><br>
+                    <input type="radio" id="asap" name="time" value="asap">
+                    <label for="asap">ASAP</label>
+                    <input type="radio" id="1hr" name="time" value="1hr">
+                    <label for="1hr">In 1 Hour</label>
+                    <input type="radio" id="2hrs" name="time" value="2hrs">
+                    <label for="2hrs">In 2 Hours</label>
+                </div>
+                <div id="delivery-container" class="bottom-space center-txt">
+                    <h2>Delivery Info</h2>
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="address">
+                    <label for="city">City</label>
+                    <input type="text" id="city" placeholder="city">
+                    <label for="ZipCode">Zip Code</label>
+                    <input type="text" id="zipCode" placeholder="zip code">
+                </div>
+                <div id="pay-container" class="bottom-space center-txt">
+                    <h2>Payment Info</h2>
+                    <div class="name-grid">
+                        <div>
+                            <label for="firstNameOnCard">First Name</label>
+                            <input type="text" id="firstName-card" placeholder="First Name">
+                        </div>
+                        <div>
+                            <label for="lastNameOnCard">Last Name</label>
+                            <input type="text" id="lastName-card" placeholder="last Name">
+                        </div>
+                    </div>
+                    <div class="card-grid">
+                        <div>
+                            <label for="CardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="Number">
+                        </div>
+                        <div>
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="CVV">
+                        </div>
+                    </div>
+                    <label for="promo">Promo Code:</label>
+                        <input type="text" id="promo">
+                </div>
+            </div>
+            <button type="submit" id="order-submit">Place Order</button>
+            <p id="order-msg" class="center-txt">Thank you for your order!</p>
+            <br>
+        </form>
+    </main>
+    <footer>
+        <p class="copy">Copyright &copy; 2025. All Rights Reserved.</p>
+        <h2 class="center-txt mobile-footer-title top-space">Ice, Ice, Maybe</h2>
+        <div class="footer-grid">
+            <div>
+                <ul class="footer-list top-space">
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">X</a></li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="center-txt tab-footer-title">Ice, Ice, Maybe</h2>
+                <ul class="footer-list footer-links">
+                    <li><br></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                </ul>
+            </div>
+            <div>
+                <img src="Images/logo-transparent.png" alt="img" class="footer-logo">
+            </div>
+        </div>
+    </footer>
+    <script src="order.js"></script>
+    <script src="script.js" defer></script>
+    <script></script>
+</body>
+</html>
