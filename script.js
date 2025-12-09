@@ -10,23 +10,16 @@ function nav() {
 }
 
 // responsive desk nav
-
 window.addEventListener('scroll', function() {
     let scrollThreshold = 200;
-    let tabNav = this.document.getElementById("tab-nav");
-    let deskNav = this.document.getElementById("desk-nav");
+    let deskNav = this.document.getElementById("desk-nav")
     if (window.scrollY > scrollThreshold) {
-        tabNav.style.backdropFilter = "blur(10px)";
-        deskNav.style.backdropFilter = "blur(10px)"; 
-        tabNav.style.opacity = "0.7";
+        deskNav.style.backdropFilter = "blur(10px)";
         deskNav.style.opacity = "0.7";
         deskNav.style.padding = "20px 0";
         deskNav.style.top = "0";
-        tabNav.style.top = "0";
     } else {
-        tabNav.style.backdropFilter = "none";
-        deskNav.style.backdropFilter = "none"; 
-        tabNav.style.opacity = "1";
+        deskNav.style.backdropFilter = "none" ;
         deskNav.style.opacity = "1";
         deskNav.style.padding = "0";
     }
@@ -107,7 +100,6 @@ function updateLoginState(){
         });
     }
 }
-
 window.onload = () => {
     updateLoginState();
     let managerLoggedIn = localStorage.getItem("manager") == "true";
@@ -212,7 +204,7 @@ window.onload = () => {
             })
         })
     }
-
+  
     //function that closes the profile panel
     function closeProfile(){
         if(profileContainer) profileContainer.style.display = "none";
@@ -822,6 +814,7 @@ window.onload = () => {
 
         });
     })
+
 
     //runs when the change btn is pressed that will allow you to change any information you changed in the profile 
     changeBtn.forEach((btn) => {

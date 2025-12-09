@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>Ice, Ice, Maybe :: Menu</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="Images/icon.png">
     <!--fonts-->
@@ -27,23 +27,24 @@
             <a href="#" id="open-profile"><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
         </div>
     </nav>
-    <nav class="tab-nav" id="tab-nav">
-        <div class="tab-links">
-            <a href="index.html" class="index-link">Home</a>
-            <a href="menu.html">Menu</a>
-            <a href="reviews.html">Reviews</a>
-            <button class="login-SignUp-Btn">Login/Sign Up</button>
-            <a href="#" id="open-profile"><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
-        </div>
-    </nav>
-    <nav class="desk-nav" id="desk-nav">
-        <div class="links">
-            <div>
-                <a href="index.html">Home</a>
+        <nav class="desk-nav" id="desk-nav">
+            <div class="links">
+                <div>
+                    <a href="index.html">Home</a>
+                </div>
+                <div>
+                    <a href="menu.html">Menu</a>
+                </div>
+                <div>
+                    <a href="reviews.html">Reviews</a>
+                </div>
             </div>
             <div>
-                <a href="menu.html">Menu</a>
+                <div class="profile-img">
+                    <a href=""><img src="Images/istockphoto-1495088043-612x612.png" alt="img"></a>
+                </div>
             </div>
+
             <div>
                 <a href="reviews.html">Reviews</a>
             </div>
@@ -287,6 +288,19 @@
 
             <button class="addItemBtn" id="addItemBtn">Add Item</button>
         </div>
+        </nav>
+    <main>
+        <div class="cart-grid" id="cart-container">
+            <img class="cart-icon" id="cart-icon" src="Images/cart-icon.png" alt="img">
+            <div class="cart-container">
+                <h1 class="center-txt top-space">Your Cart:</h1>
+                <div class="cart-title-grid">
+                </div>
+                <div id="currentCart">
+
+                </div>
+            </div>
+        </div>
         <h1 class="top-space center-txt">Our Menu</h1>
         <p class="top-space indent bottom-space">Whether you're looking for something classic, something adventurous, or something just plain weird (we don't judge), our menu has a frozen favorite for everyone. Feel free to browse our menu below. Take your time, explore each category, and discover why our customers say dining with us is the most refreshing part of their day.</p>
 
@@ -357,6 +371,7 @@
             </div>
         </div>
     </footer>
-    <script src="script.js"></script>
+    <script src="order.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
