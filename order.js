@@ -1,5 +1,6 @@
 // menu
-function loadCart() {
+window.onload = function() {
+    function loadCart() {
     let saved = localStorage.getItem("cart");
     if (saved) {
         cart = JSON.parse(saved);
@@ -60,38 +61,6 @@ let drinks = [
     drink3 = new menuItem("Melted Snowman", "Suprisingly Flavorful", `<img src="Images/snowman.png" alt="img">`, 4),
     drink4 = new menuItem("Frostbite Tonic", "Numbs your lips after each sip", `<img src="Images/tonic.png" alt="img">`, 4.5),
 ]
-
-
-function appendSnowCones() {
-    let coneContainer = document.getElementById("coneContainer");
-    if(!coneContainer) return;
-
-    for (let item of snowcones) {
-        coneContainer.innerHTML += item.toHTML();
-    }
-}
-
-function appendSides() {
-    let sidesContainer = document.getElementById("sidesContainer");
-    if(!sidesContainer) return;
-
-    for (let item of sides) {
-        sidesContainer.innerHTML += item.toHTML();
-    }
-}
-
-function appendDrinks() {
-    let drinksContainer = document.getElementById("drinksContainer");
-    if(!drinksContainer) return;
-
-    for (let item of drinks) {
-        drinksContainer.innerHTML += item.toHTML();
-    }
-}
-
-appendSnowCones();
-appendSides();
-appendDrinks();
 
 let cart = [];
 function addToCart(name, price) {
@@ -225,3 +194,4 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Order Placed. Thank you for your business!");
     })
 })
+}

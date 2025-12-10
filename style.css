@@ -1022,6 +1022,15 @@ textarea {
     background-color: #77B0Bf;
     color: white;
 }
+.cancel-link{
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    column-rule-color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 /* style rules for footer */
 
 footer {
