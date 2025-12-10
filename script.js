@@ -81,23 +81,25 @@ function updateLoginState(){
     let loggedIn = localStorage.getItem("loggedIn") == "true";
     let managerLoggedIn = localStorage.getItem("manager") == "true";
     
-    let loginSignUpBtn = document.querySelectorAll(".login-SignUp-Btn");
-    if(loginSignUpBtn.length){
-        loginSignUpBtn.forEach(btn => {
-            if (btn) btn.style.display = loggedIn ? "none" : "flex";
-        });
-    }
-    let managerBtn = document.querySelectorAll(".manager-btns");
-    if(managerBtn.length){
-        managerBtn.forEach(btn => {
-            if (btn) btn.style.display = managerLoggedIn ? "flex" : "none";
-        });
-    }
-    let addToCartBtn = document.querySelectorAll(".cart-btn");
-    if(addToCartBtn.length){
-        addToCartBtn.forEach(btn => {
-            if (btn) btn.style.display = managerLoggedIn ? "none" : "flex";
-        });
+    document.querySelectorAll(".login-SignUp-Btn").forEach(btn => {
+        if (btn) btn.style.display = loggedIn ? "none" : "flex";
+    })
+    document.querySelectorAll(".manager-btns").forEach(btn => {
+        if (btn) btn.style.display = managerLoggedIn ? "flex" : "none";
+    })
+    document.querySelectorAll(".cart-btn").forEach(btn => {
+        if (btn) btn.style.display = managerLoggedIn ? "none" : "flex";
+    })
+
+    let cartIcon = document.getElementById("cart-icon")
+    let cartContainer = document.getElementById("cart-container")
+
+    if(loggedIn && !managerLoggedIn){
+        if(cartIcon) cartIcon.style.display = "flex";
+        if(cartContainer) cartContainer.style.display = "flex";
+    } else {
+        if(cartIcon) cartIcon.style.display = "none";
+        if(cartContainer) cartContainer.style.display = "none";
     }
 }
 window.onload = () => {
@@ -173,8 +175,8 @@ window.onload = () => {
                 if(profileContainer) profileContainer.style.display = "flex";
                 if(profilePanel) profilePanel.classList.add("active");
                 document.body.style.position = "fixed";
-
-                let profileScroll= profilePanel.querySelectorAll(".profile-content-scroll");
+                
+                let profileScroll= profilePanel ? profilePanel.querySelectorAll(".profile-content-scroll") : []
                 profileScroll.forEach(container => {
                     container.scrollTop = 0;
                 });
@@ -204,7 +206,7 @@ window.onload = () => {
             })
         })
     }
-  
+
     //function that closes the profile panel
     function closeProfile(){
         if(profileContainer) profileContainer.style.display = "none";
@@ -246,8 +248,8 @@ window.onload = () => {
                 this.desc = desc;
                 this.img = img;
                 this.price = price;
-                this.category = category;
-                this.id = id;
+                this.category = String(category);
+                this.id = Number(id);
             }
 
             toHTML() {
@@ -258,16 +260,17 @@ window.onload = () => {
                             <h3>${this.name}</h3>
                             <p><em>${this.desc}</em></p>
                             <p class="price">${this.price}</p>
-                            <button class="cart-btn">Add To Cart</button>
+
+                            <button class="cart-btn" data-name="${this.name}" data-price="${this.price.replace('$', '')}">Add To Cart</button>
                             <div class="manager-btns">
                                 <button class="menu-delete-btn">Delete</button>
                             </div>
                         </div>
+                        <p id="msg-${this.name.replace(/\s+/g,'')}" class ="item-message"></p>
                     </div>
                 `;
             }
         }
-
 
         let snowcones = [
             new menuItem("Salisbury Steak", "Cooked to your liking", `<img src="Images/steak.png" alt="img">`,"$67", "snowcone", 1),
@@ -310,14 +313,55 @@ window.onload = () => {
             ));
         }
 
+                //runs when the delete btn is pressed on and item and will remove the item from the array that it is in
+        document.addEventListener("click", (e) => {
+            let deleteBtn = e.target.closest(".menu-delete-btn");
+            if(!deleteBtn) return;
+
+            let itemDiv = deleteBtn.closest(".menu-item");
+            if(!itemDiv) return;
+
+            console.log("clicked delete on:", itemDiv.dataset)
+
+            let itemId = Number(itemDiv.dataset.id);
+            let category = itemDiv.dataset.category;
+
+            let itemArray = category == "snowcone" ? snowcones : category == "side" ? sides : drinks;
+            let itemIndex = itemArray.findIndex(i => Number(i.id) == itemId);
+
+            console.log("Item array:", itemArray)
+            console.log("Item index", itemIndex)
+
+            if(itemIndex == -1)return;
+
+            let [deletedItem] = itemArray.splice(itemIndex, 1);
+            deletedItems.push(deletedItem);
+
+            showUndoNotification(deletedItem);
+
+            let containerId = category =="snowcone" ? "coneContainer": category == "side" ? "sidesContainer" : "drinksContainer";
+
+            renderItems(containerId, itemArray);
+            saveMenuToLocal();
+        })
+
         if(localStorage.getItem("snowcones")){
-            snowcones = reviveMenuItems(JSON.parse(localStorage.getItem("snowcones")));
+            let savedSnowcones = JSON.parse(localStorage.getItem("snowcones"))
+            if(savedSnowcones && savedSnowcones.length > 0){
+                snowcones = reviveMenuItems(savedSnowcones)
+            }
         }
         if(localStorage.getItem("sides")){
-            sides = reviveMenuItems(JSON.parse(localStorage.getItem("sides")));
+            let savedSides = JSON.parse(localStorage.getItem("sides"))
+            if(savedSides && savedSides.length > 0){
+                sides = reviveMenuItems(savedSides)
+            }
         }
         if(localStorage.getItem("drinks")){
-            drinks = reviveMenuItems(JSON.parse(localStorage.getItem("drinks")));
+            let savedDrinks = JSON.parse(localStorage.getItem("drinks"))
+            if(savedDrinks && savedDrinks.length > 0){
+                drinks = reviveMenuItems(savedDrinks)
+            }
         }
         let deletedItems = [];
 
@@ -330,22 +374,166 @@ window.onload = () => {
         }
 
         let addItemBtn = addItemModal ? addItemModal.querySelector("#addItemBtn") : null;
-        console.log("addItemBtn =", addItemBtn);
         let closeAddModalBtn = addItemModal ? addItemModal.querySelector(".xIcon") : null;
 
+        let cart = []
+        function loadCart(){
+            let saved = localStorage.getItem("cart")
+            if(saved){
+                cart = JSON.parse(saved)
+                updateCart()
+            }
+        }
+
+        function addToCart(name, price){
+            let existing = cart.find(item => item.name == name)
+            if(existing){
+                existing.quantity++
+            }else{
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                })
+                showItemMessage(name)
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart))
+            updateCart()
+        }
+
+        function showItemMessage(name){
+            let id = "msg-" + name.replace(/\s+/g, '')
+            let p = document.getElementById(id)
+            if(p) p.textContent = "Added to cart"
+        }
+
+        function removeMessage(name){
+            let id = "msg-" + name.replace(/\s+/g, '')
+            let p = document.getElementById(id)
+            if(p) p.textContent = ''
+        }
+
+        function updateCart() {
+            let itemContainer = document.getElementById("currentCart")
+            if(!itemContainer) return
+
+            let loggedIn = localStorage.getItem("loggedIn") == "true"
+
+            itemContainer.innerHTML = ""
+            if(!loggedIn){
+                itemContainer.innerHTML = `
+                    <div class="cart-login-prompt>
+                        <button class="cart-login-btn">Login/Sign Up</button>
+                    </div>
+                `
+            }
+
+            if(cart.length == 0){
+                itemContainer.innerHTML = ""
+                return
+            }
+
+            let total = 0
+            if(itemContainer){
+                itemContainer.innerHTML = ""
+                cart.forEach((item, index) => {
+                    let subtotal = item.price * item.quantity
+                    total += subtotal
+
+                    itemContainer.innerHTML += `
+                        <div class="top-space item">
+                            <div class="cart-item">
+                                <h1>${item.name}</h1>
+                                <p>Price: <br>$${item.price.toFixed(2)}</p>
+                                <label>Qty:
+                                    <input type="number" value="${item.quantity}" min="1" max="1000"
+                                        class="quantity" onchange="changeQuantity(${index}, this.value)">
+                                </label>
+                            </div>
+                            <button onclick="removeItem('${item.name}', ${item.price})">Remove</button>
+                            <p class="subtotal">Subtotal: $${subtotal.toFixed(2)}</p>
+                        </div>
+                    `
+                })
+
+                itemContainer.innerHTML += `
+                    <h2 class="center-txt">Total: $${total.toFixed(2)}</h2>
+                    <a class="confirm" href="order.html">Confirm Order</a>
+                    <a href="#" id="cancel-order" class="cancel-link">Cancel Order</a>
+                `
+
+                let cancelLink = document.getElementById("cancel-order")
+                if(cancelLink){
+                    cancelLink.addEventListener("click", (e) => {
+                        e.preventDefault()
+                        cart = []
+                        localStorage.removeItem("cart")
+                        updateCart()
+                        let cartContainer = document.getElementById("cart-container")
+                        if(cartContainer) cartContainer.style.right = "-383px"
+                    })
+                }
+            }   
+        }
+
+        function changeQuantity(index, newQty){
+            cart[index].quantity = parseInt(newQty)
+            updateCart()
+        }
+
+        window.changeQuantity = changeQuantity
+
+        function removeItem(name, price){
+            cart = cart.filter(item => !(item.name == name && item.price == price))
+            removeMessage(name)
+            updateCart()
+        }
+
+        window.removeItem = removeItem
+
+
+        console.log("drinks array:", drinks)
+        console.log("drinks container:", document.getElementById("drinksContainer"))
         //function that renders menu items into a container and shows/hides manager or cart buttons based on the login status
         function renderItems(containerId, items){
             let container = document.getElementById(containerId);
             if(!container) return;
+
             container.innerHTML = items.map(item => item.toHTML()).join("");
 
+            let loggedIn = localStorage.getItem("loggedIn") == "true";
             let managerLoggedIn = localStorage.getItem("manager") =="true";
             container.querySelectorAll(".menu-item").forEach(itemDiv => {
                 let managerBtn = itemDiv.querySelector(".manager-btns");
                 let addToCartBtn = itemDiv.querySelector(".cart-btn");
 
                 if(managerBtn) managerBtn.style.display = managerLoggedIn ? "flex" : "none";
-                if(addToCartBtn) addToCartBtn.style.display = managerLoggedIn ? "none" : "flex";
+                if(addToCartBtn){
+                    addToCartBtn.style.display = managerLoggedIn ? "none" : "flex";
+                    addToCartBtn.addEventListener("click", () => {
+                        let loggedIn = localStorage.getItem("loggedIn") == "true"
+
+                        if(!loggedIn){
+                            let modal = document.querySelector("#modal")
+                            let loginPanel = document.querySelector(".login")
+                            let signUpPanel = document.querySelector(".signUp")
+
+                            if(modal) modal.style.display = "flex"
+                            if(loginPanel) loginPanel.classList.add("active")
+                            if(signUpPanel) signUpPanel.classList.remove("active")
+                            document.body.style.position = "fixed"
+
+                            return
+                        }
+
+                        let name = itemDiv.querySelector("h3").textContent
+                        let priceText = itemDiv.querySelector(".price").textContent
+                        let price = parseFloat(priceText.replace("$", ""))
+
+                        addToCart(name, price)
+                    })
+                } 
             });
         }
 
@@ -359,6 +547,20 @@ window.onload = () => {
         renderItems("coneContainer", snowcones);
         renderItems("sidesContainer", sides);
         renderItems("drinksContainer", drinks);
+
+        let cartBtn = document.getElementById("cart-icon")
+        let cartContainer = document.getElementById("cart-container")
+        if(cartBtn && cartContainer){
+            cartBtn.addEventListener("click", () => {
+                if(cartContainer.style.right == "-383px"){
+                    cartContainer.style.right = "0px"
+                }else{
+                    cartContainer.style.right = "-383px"
+                }
+            })
+        }
+
+        loadCart()
 
         let addButtons = document.querySelectorAll(".menu-add-btn");
 
@@ -407,7 +609,7 @@ window.onload = () => {
                 }
 
                 let file = addItemInputs.img.files[0];
-                let id = Date.now;
+                let id = Date.now();        
                 
                 if(file){
                     let reader = new FileReader();
@@ -425,7 +627,7 @@ window.onload = () => {
         //function that add a new item to the appropiate array, updates the display, saves to local, and then resets the add-item form
         function finishAddItem(name, desc, imgHTML, price, category, id){
             let newItem = new menuItem(name, desc, imgHTML, price, category, id);
-                
+
             if(category == "snowcone") snowcones.push(newItem);
             else if(category == "side") sides.push(newItem);
             else if(category == "drink") drinks.push(newItem);
@@ -443,33 +645,6 @@ window.onload = () => {
             addItemModal.classList.remove("active");
             document.body.style.position = "static";
         }
-
-        //runs when the delete btn is pressed on and item and will remove the item from the array that it is in
-        document.addEventListener("click", (e) => {
-            let deleteBtn = e.target.closest(".menu-delete-btn");
-            if(!deleteBtn) return;
-
-            let itemDiv = deleteBtn.closest(".menu-item");
-            if(!itemDiv) return;
-
-            let itemId = Number(itemDiv.dataset.id);
-            let category = itemDiv.dataset.category;
-
-            let itemArray = category == "snowcone" ? snowcones : category == "side" ? sides : drinks;
-            let itemIndex = itemArray.findIndex(i => Number(i.id) == itemId);
-
-            if(itemIndex == -1)return;
-
-            let [deletedItem] = itemArray.splice(itemIndex, 1);
-            deletedItems.push(deletedItem);
-
-            showUndoNotification(deletedItem);
-
-            let containerId = category =="snowcone" ? "coneContainer": category == "side" ? "sidesContainer" : "drinksContainer";
-
-            renderItems(containerId, itemArray);
-            saveMenuToLocal();
-        })
 
         let undoTimeout;
         
@@ -535,7 +710,46 @@ window.onload = () => {
         let addToCartBtn= document.querySelectorAll(".cart-btn");
 
     }
-        
+
+    
+        let pickupBtn = document.getElementById("pickup")
+        let deliveryBtn = document.getElementById("delivery")
+        let orderSubmitBtn = document.getElementById("order-submit")
+        let pickupContainer = document.getElementById("pickup-container")
+        let deliveryContainer = document.getElementById("delivery-container")
+        let payContainer = document.getElementById("pay-container")
+
+        if(pickupBtn && deliveryBtn && orderSubmitBtn){
+            function showOrderForm(type){
+                if(type == "pickup"){
+                    pickupContainer.style.display = "block"
+                    deliveryContainer.style.display = "none"
+                }else if(type == "delivery"){
+                    pickupContainer.style.display = "none"
+                    deliveryContainer.style.display = "block"
+                }
+                    payContainer.style.display = "block"
+                    orderSubmitBtn.style.display = "block"
+            }
+
+            let savedType = localStorage.getItem("orderType")
+            if(savedType) showOrderForm(savedType)
+                
+            pickupBtn.addEventListener("click", () => {
+                localStorage.setItem("orderType", "pickup")
+                showOrderForm("pickup")
+            })
+            deliveryBtn.addEventListener("click", () => {
+                localStorage.setItem("orderType", "delivery")
+                showOrderForm("delivery")
+            })
+            orderSubmitBtn.addEventListener("click", () => {
+                cart = []
+                localStorage.removeItem("cart")
+                alert("Order Placed!")
+            })
+        }
+
     xBtns = document.querySelectorAll(".xIcon-Btn");
     let signUpBtn = document.querySelector(".signUpBtn");
     let switchToSignUpLink = document.getElementById("goToSignUp");
